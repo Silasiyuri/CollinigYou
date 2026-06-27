@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Comunicaciones Satelitales y WiFi</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #eef2f7; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .app-container { background-color: white; width: 100%; max-width: 400px; height: 600px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; overflow: hidden; }
+        .app-header { background-color: #007bff; color: white; padding: 20px; text-align: center; font-size: 20px; font-weight: bold; }
+        .app-content { flex: 1; padding: 20px; overflow-y: auto; background-color: #fff; }
+        .ventana { display: none; }
+        .ventana.activa { display: block; }
+        .formulario { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+        .formulario label { font-size: 14px; color: #495057; font-weight: 600; display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 14px; border: 1px solid #ced4da; border-radius: 12px; font-size: 16px; outline: none; background-color: #f8f9fa; }
+        input:focus { border-color: #007bff; background-color: #fff; }
+        .btn-guardar { background-color: #007bff; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        
+        .lista-contactos { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .contacto-item { display: flex; justify-content: space-between; align-items: center; padding: 14px; background-color: #f8f9fa; border-radius: 14px; border: 1px solid #dee2e6; }
+        .contacto-info { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+        .contacto-nombre { font-weight: bold; color: #212529; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .contacto-numero { font-size: 14px; color: #6c757d; }
+        
+        /* Ajuste para los tres botones */
+        .acciones { display: flex; gap: 6px; align-items: center; }
+        .btn-llamar { background-color: #25D366; color: white; text-decoration: none; padding: 10px 12px; border-radius: 30px; font-size: 14px; font-weight: bold; display: inline-flex; align-items: center; }
+        
+        /* Botón de Satélite */
+        .btn-satelite { background-color: #6f42c1; color: white; text-decoration: none; padding: 10px 12px; border-radius: 30px; font-size: 14px; font-weight: bold; display: inline-flex; align-items: center; }
+        .btn-satelite:hover { background-color: #59359a; }
+        
+        .btn-eliminar { background-color: #dc3545; color: white; border: none; padding: 10px 12px; border-radius: 30px; cursor: pointer; font-size: 14px; }
+        
+        .lista-vacia { text-align: center; color: #6c757d; margin-top: 50px; font-size: 15px; }
+        .app-nav { display: flex; background-color: #f8f9fa; border-top: 1px solid #dee2e6; height: 70px; }
+        .nav-item { flex: 1; background: none; border: none; outline: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 13px; color: #6c757d; font-weight: 500; gap: 4px; }
+        .nav-item span { font-size: 22px; }
+        .nav-item.activo { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="app-header" id="tituloApp">Agregar Número</div>
+        <div class="app-content">
+            <!-- VENTANA 1: AGREGAR -->
+            <div id="ventanaAgregar" class="ventana activa">
+                <div class="formulario">
+                    <div>
+                        <label for="nombre">Nombre del Contacto</label>
+                        <input type="text" id="nombre" placeholder="Ej. Carlos Mendoza">
+                    </div>
+                    <div>
+                        <label for="telefono">Número de Teléfono</label>
+                        <input type="tel" id="telefono" placeholder="Ej. +5212345678">
+                    </div>
+                    <button class="btn-guardar" onclick="guardarContacto()">Guardar en Contactos</button>
+                </div>
+            </div>
+            <!-- VENTANA 2: CONTACTOS -->
+            <div id="ventanaContactos" class="ventana">
+                <ul id="listaContactos" class="lista-contactos"></ul>
+            </div>
+        </div>
+        <nav class="app-nav">
+            <button class="nav-item activo" id="btnNavAgregar" onclick="cambiarVentana('agregar')"><span>➕</span>Agregar</button>
+            <button class="nav-item" id="btnNavContactos" onclick="cambiarVentana('contactos')"><span>👤</span>Contactos</button>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', cargarContactos);
+
+        function cambiarVentana(pantalla) {
+            const vAgregar = document.getElementById('ventanaAgregar');
+            const vContactos = document.getElementById('ventanaContactos');
+            const btnAgregar = document.getElementById('btnNavAgregar');
+            const btnContactos = document.getElementById('btnNavContactos');
+            const titulo = document.getElementById('tituloApp');
+
+            if (pantalla === 'agregar') {
+                vAgregar.classList.add('activa');
+                vContactos.classList.remove('activa');
+                btnAgregar.classList.add('activo');
+                btnContactos.classList.remove('activo');
+                titulo.innerText = 'Agregar Número';
+            } else if (pantalla === 'contactos') {
+                vAgregar.classList.remove('activa');
+                vContactos.classList.add('activa');
+                btnAgregar.classList.remove('activo');
+                btnContactos.classList.add('activo');
+                titulo.innerText = 'Mis Contactos';
+                cargarContactos(); 
+            }
+        }
+
+        function guardarContacto() {
+            const nombreInput = document.getElementById('nombre');
+            const telefonoInput = document.getElementById('telefono');
+            const nombre = nombreInput.value.trim();
+            const telefono = telefonoInput.value.trim().replace(/\s+/g, '');
+
+            if (nombre === '' || telefono === '') {
+                alert('Por favor, ingresa tanto el nombre como el número.');
+                return;
+            }
+
+            try {
+                let contactos = JSON.parse(localStorage.getItem('misContactos')) || [];
+                contactos.push({ nombre: nombre, telefono: telefono });
+                localStorage.setItem('misContactos', JSON.stringify(contactos));
+                
+                nombreInput.value = '';
+                telefonoInput.value = '';
+                
+                cambiarVentana('contactos');
+            } catch (error) {
+                alert('Error: Tu navegador bloquea el almacenamiento local.');
+            }
+        }
+
+        function cargarContactos() {
+            const lista = document.getElementById('listaContactos');
+            lista.innerHTML = '';
+            
+            try {
+                let contactos = JSON.parse(localStorage.getItem('misContactos')) || [];
+                if (contactos.length === 0) {
+                    lista.innerHTML = '<li class="lista-vacia">Aún no tienes contactos guardados.</li>';
+                    return;
+                }
+                contactos.forEach((contacto, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'contacto-item';
+                    li.innerHTML = `
+                        <div class="contacto-info">
+                            <span class="contacto-nombre">${contacto.nombre}</span>
+                            <span class="contacto-numero">${contacto.telefono}</span>
+                        </div>
+                        <div class="acciones">
+                            <!-- Botón de llamada (Utiliza VoWiFi si estás conectado a internet) -->
+                            <a href="tel:${contacto.telefono}" class="btn-llamar" title="Llamar">📞</a>
+                            
+                            <!-- Botón de Satélite (Usa el protocolo nativo SMS del dispositivo) -->
+                            <a href="sms:${contacto.telefono}" class="btn-satelite" title="Mensaje Satélite">🛰️</a>
+                            
+                            <!-- Eliminar contacto -->
+                            <button class="btn-eliminar" onclick="eliminarContacto(${index})">❌</button>
+                        </div>
+                    `;
+                    lista.appendChild(li);
+                });
+            } catch (e) {
+                lista.innerHTML = '<li class="lista-vacia">Error al cargar la base de datos local.</li>';
+            }
+        }
+
+        function eliminarContacto(index) {
+            try {
+                let contactos = JSON.parse(localStorage.getItem('misContactos')) || [];
+                contactos.splice(index, 1);
+                localStorage.setItem('misContactos', JSON.stringify(contactos));
+                cargarContactos();
+            } catch (e) {
+                alert('No se pudo eliminar el contacto.');
+            }
+        }
+    </script>
+</body>
+</html>
