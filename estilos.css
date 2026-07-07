@@ -1,0 +1,63 @@
+:root { --v: #191919; --b: #f5f5f0; --o: #d4af37; --dp: #e5c158; --r: #bc392b; --g: #27ae60; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: sans-serif; background: var(--v); color: var(--b); overflow: hidden; height: 100vh; width: 100vw; }
+header { background: transparent; display: flex; padding: 2rem; position: fixed; width: 100%; top: 0; left: 0; z-index: 1000; pointer-events: none; }
+
+.bp { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; cursor: pointer; width: 48px; height: 48px; background: var(--b); border: none; border-radius: 50%; z-index: 1100; pointer-events: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.bp div { width: 5px; height: 5px; background: var(--v); border-radius: 50%; }
+
+.ml { position: fixed; top: 0; left: -380px; width: 320px; height: 100vh; background: var(--v); border-right: 1px solid rgba(245, 245, 240, 0.1); padding: 8rem 2rem 4rem 2rem; display: flex; flex-direction: column; justify-content: space-between; z-index: 1050; transition: 0.4s; }
+.ml.a { left: 0; }
+.nav-links { display: flex; flex-direction: column; gap: 2rem; }
+.ml a { color: var(--b); text-decoration: none; font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; border-bottom: 1px solid rgba(245, 245, 240, 0.1); padding-bottom: 0.5rem; cursor: pointer; transition: 0.3s; }
+.ml a:hover { padding-left: 10px; color: var(--dp); border-bottom-color: var(--dp); }
+
+.redes-sociales { display: flex; gap: 1.5rem; border-top: 1px solid rgba(245, 245, 240, 0.1); padding-top: 1.5rem; margin-top: auto; }
+.redes-sociales a { font-size: 1rem; letter-spacing: 1px; border: none; padding: 0; }
+
+.cc { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1040; display: none; }
+.h { height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; position: relative; background: var(--v); overflow: hidden; }
+.cp { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 2rem; width: 100%; max-width: 500px; }
+.cb { position: relative; width: 280px; margin-bottom: 2rem; z-index: 1005; }
+
+.bi { width: 100%; padding: 0.8rem 1.5rem 0.9rem 3rem; font-size: 0.9rem; border: 1px solid var(--b); background: transparent; color: var(--b); outline: none; border-radius: 30px; }
+.bi:focus { border-color: var(--o); }
+.il { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border: 2px solid var(--b); border-radius: 50%; }
+.il::after { content: ''; position: absolute; top: 8px; left: 8px; width: 2px; height: 6px; background: var(--b); transform: rotate(-45deg); }
+
+.cp h1 { font-size: 5.5rem; font-weight: 900; letter-spacing: 12px; margin-bottom: 1rem; }
+.cp p { color: var(--o); font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; }
+
+.sc { display: none; width: 100vw; height: 100vh; padding: 8rem 2rem; background: var(--v); overflow-y: auto; position: absolute; top: 0; left: 0; z-index: 500; text-align: center; }
+.sc h2 { font-size: 2.5rem; margin-bottom: 2rem; border-bottom: 1px solid rgba(245, 245, 240, 0.1); padding-bottom: 1rem; }
+.b-contenido { width: 100%; max-width: 650px; margin: 0 auto; }
+
+.platillo { background: rgba(245, 245, 240, 0.03); padding: 1.5rem 2rem; border-left: 4px solid var(--o); text-align: left; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+.ba { background: var(--b); color: var(--v); border: none; padding: 0.4rem 0.8rem; font-weight: 700; cursor: pointer; }
+
+.btn-del { background: transparent; color: var(--r); border: 1px solid var(--r); padding: 0.2rem 0.5rem; font-weight: 700; cursor: pointer; margin-left: 1rem; }
+.btn-del:hover { background: var(--r); color: var(--b); }
+
+.form-kosar { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; text-align: left; }
+.form-kosar input { width: 100%; padding: 0.8rem; background: rgba(245, 245, 240, 0.03); border: 1px solid rgba(245, 245, 240, 0.2); color: var(--b); outline: none; }
+.form-kosar input:focus { border-color: var(--o); }
+
+.bloque-kupon { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.btn-kupon { background: transparent; color: var(--o); border: 1px solid var(--o); padding: 0 1rem; font-weight: 700; cursor: pointer; }
+.btn-kupon:hover { background: var(--o); color: var(--v); }
+
+.ci { border: 1px solid rgba(245, 245, 240, 0.1); padding: 2rem; line-height: 1.6; }
+.br { position: fixed; bottom: 2rem; right: 1rem; background: var(--v); color: var(--o); text-decoration: none; padding: 0.7rem 1.2rem; font-weight: 800; font-size: 0.8rem; display: flex; gap: 5px; z-index: 1010; border: 1px solid var(--o); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+
+@media(max-width:768px){
+    header { padding: 1.5rem; } .bp { width: 42px; height: 42px; } .ml { width: 310px; } .cb { width: 240px; } .cp h1 { font-size: 3.8rem; letter-spacing: 8px; } .br { bottom: 1.5rem; right: 0.8rem; padding: 0.7rem 1.1rem; font-size: 0.75rem; } .sc h2 { font-size: 2rem; } .platillo { flex-direction: column; align-items: flex-start; gap: 1rem; }
+}
+/* ... (Mantiene todo el contenido anterior de estilos.css y añade abajo) */
+.contenedor-mapa {
+    margin-top: 2rem;
+    width: 100%;
+    overflow: hidden;
+    background: rgba(245, 245, 240, 0.02);
+    padding: 1rem;
+    border: 1px solid rgba(245, 245, 240, 0.1);
+}
