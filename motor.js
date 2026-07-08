@@ -61,16 +61,22 @@ let desplY=e.touches.pageY-inicioY;
 if(document.documentElement.scrollTop===0&&desplY>0){e.preventDefault();}
 },{passive:false});
 
-// >>> CARRUSEL EN LAZO CONTINUO ABSOLUTO SIN BRINCOS NI REVERSAS <<<
-const slider=document.getElementById('carrusel-slider');
-setInterval(()=>{
- if(slider){
-  slider.style.transition="transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
-  slider.style.transform="translateX(-20%)"; // Avanza de corrido a la foto siguiente
-  setTimeout(()=>{
-   slider.style.transition="none"; // Apaga el efecto un milisegundo
-   slider.appendChild(slider.firstElementChild); // Manda la primera foto al final de la cinta
-   slider.style.transform="translateX(0)"; // Reajusta la posición inicial en silencio
-  },800);
- }
-},3000);
+// ==========================================
+// 4. CARRUSEL EN BUCO INFINITO CON DETENCIÓN CONTROLADA
+// ==========================================
+const slider = document.getElementById('carrusel-slider');
+
+setInterval(() => {
+    if (slider) {
+        // 1. Inicia el deslizamiento fluido hacia la izquierda (dura 0.8 segundos)
+        slider.style.transition = "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        slider.style.transform = "translateX(-20%)"; // Se mueve exactamente el ancho de una foto
+        
+        // 2. Esperamos exactamente los 0.8 segundos a que termine de moverse
+        setTimeout(() => {
+            slider.style.transition = "none"; // Apagamos la animación por un milisegundo
+            slider.appendChild(slider.firstElementChild); // Movemos la foto que pasó al final de la cinta
+            slider.style.transform = "translateX(0)"; // Reseteamos la posición en silencio sin saltos
+        }, 800);
+    }
+}, 3800); // 3800ms = 3 segundos quieta + 0.8 segundos moviéndose
