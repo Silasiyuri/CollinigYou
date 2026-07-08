@@ -53,3 +53,13 @@ window.location.href="https://wa.me"+encodeURIComponent(txt);
 car=[];descuento=0;document.getElementById('inpNev').value='';document.getElementById('inpCim').value='';document.getElementById('inpTel').value='';
 upC();secs.forEach(s=>s.style.display='none');vp.style.display='flex';
 });
+document.getElementById('box-pizza-gourmet').addEventListener('click',(e)=>{if(e.target.id==='close-promo'){e.stopPropagation();document.getElementById('box-pizza-gourmet').style.setProperty('display','none','important');}else{document.querySelector('[data-t="kosar"]').click();}});
+
+// >>> PROTECCIÓN INDUSTRIAL TÁCTIL CONTRA RECARGA EN SMARTPHONES <<<
+let inicioY=0;
+document.addEventListener('touchstart',(e)=>{inicioY=e.touches[0].pageY;},{passive:true});
+document.addEventListener('touchmove',(e)=>{
+    let desplY=e.touches[0].pageY-inicioY;
+    // Si el usuario desliza hacia abajo y está arriba de todo de la página, frena la recarga
+    if(document.documentElement.scrollTop===0&&desplY>0){e.preventDefault();}
+},{passive:false});
