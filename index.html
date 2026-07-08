@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>Basilico Pizzéria</title>
-<link rel="stylesheet" href="estilos.css?v=300.0">
+<link rel="stylesheet" href="estilos.css?v=400.0">
 </head>
 <body>
 <div id="box-pizza-gourmet" onclick="if(event.target.id!=='close-promo'){document.querySelector('[data-t=\'kosar\']').click();}">
@@ -32,17 +32,18 @@ setTimeout(function(){var p=document.getElementById('box-pizza-gourmet');if(p){p
 <div class="tarjeta-uzlet-top service-pickup" id="card-pickup"><h3>🏃 SZEMÉLYES ÁTVÉTEL</h3><p class="small-p">Válaszd ki a legközelebbi üzletet.</p><p class="action-p">Kattints a termékekhez &rarr;</p></div>
 </div>
 <h2 class="title-uzletek">Üzleteink</h2>
-<!-- CARRUSEL ADAPTADO CON REGLAS DE FLUJO LÍQUIDO CSS -->
+
+<!-- >>> ESTRUCTURA DE CINTA CONTINUA LÍQUIDA <<< -->
 <div class="contenedor-carrusel">
-<div class="wrapper-carrusel">
-<img src="foto.jpg" class="carrusel-img">
-<img src="https://unsplash.com" class="carrusel-img">
-<img src="https://unsplash.com" class="carrusel-img">
-<img src="https://unsplash.com" class="carrusel-img">
-<img src="https://unsplash.com" class="carrusel-img">
-<img src="pppp.jpg" class="carrusel-img">
+<div class="wrapper-carrusel" id="carrusel-slider" style="display:flex; width: 500%;">
+<img src="https://unsplash.com" class="carrusel-img" style="width:20%; height:clamp(180px,42vw,380px); object-fit:cover; flex-shrink:0;">
+<img src="https://unsplash.com" class="carrusel-img" style="width:20%; height:clamp(180px,42vw,380px); object-fit:cover; flex-shrink:0;">
+<img src="https://unsplash.com" class="carrusel-img" style="width:20%; height:clamp(180px,42vw,380px); object-fit:cover; flex-shrink:0;">
+<img src="https://unsplash.com" class="carrusel-img" style="width:20%; height:clamp(180px,42vw,380px); object-fit:cover; flex-shrink:0;">
+<img src="https://unsplash.com" class="carrusel-img" style="width:20%; height:clamp(180px,42vw,380px); object-fit:cover; flex-shrink:0;">
 </div>
 </div>
+
 <footer style="margin-top:4rem; padding:2rem 1rem; border-top:1px solid rgba(214,175,55,0.2); width:100%; max-width:1000px; text-align:center; color:#ffffff;">
 <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; margin-bottom:1.5rem;">
 <div><h4 style="color:var(--o); margin-bottom:0.4rem;">📍 CÍMÜNK</h4><p style="font-size:0.88rem; opacity:0.85;">Budapest, Kőfaragó u. 15, 1085</p></div>
@@ -65,6 +66,6 @@ setTimeout(function(){var p=document.getElementById('box-pizza-gourmet');if(p){p
 <div id="s-terkep" class="sc"><div class="b-contenido"><h2>SZÁLLÍTÁSI ZÓNA</h2><div class="contenedor-mapa"><iframe src="https://google.com" width="100%" height="350" style="border:0;border-radius:12px;" loading="lazy"></iframe></div></div></div>
 <div id="s-cont" class="sc"><div class="b-contenido"><h2>KAPCSOLAT</h2><div class="ci"><p>E-mail: ciao@pestabudapest.hu</p></div></div></div>
 </main>
-<script src="motor.js?v=300.0"></script>
+<script src="motor.js?v=400.0"></script>
 </body>
 </html>
