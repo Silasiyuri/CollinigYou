@@ -54,12 +54,8 @@ car=[];descuento=0;document.getElementById('inpNev').value='';document.getElemen
 upC();secs.forEach(s=>s.style.display='none');vp.style.display='flex';
 });
 document.getElementById('box-pizza-gourmet').addEventListener('click',(e)=>{if(e.target.id==='close-promo'){e.stopPropagation();document.getElementById('box-pizza-gourmet').style.setProperty('display','none','important');}else{document.querySelector('[data-t="kosar"]').click();}});
-
-// >>> PROTECCIÓN INDUSTRIAL TÁCTIL CONTRA RECARGA EN SMARTPHONES <<<
-let inicioY=0;
-document.addEventListener('touchstart',(e)=>{inicioY=e.touches[0].pageY;},{passive:true});
-document.addEventListener('touchmove',(e)=>{
-    let desplY=e.touches[0].pageY-inicioY;
-    // Si el usuario desliza hacia abajo y está arriba de todo de la página, frena la recarga
-    if(document.documentElement.scrollTop===0&&desplY>0){e.preventDefault();}
-},{passive:false});
+const slider=document.getElementById('carrusel-slider');
+setInterval(()=>{if(slider){slider.style.transition="transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)";slider.style.transform="translateX(-20%)";setTimeout(()=>{slider.style.transition="none";slider.appendChild(slider.firstElementChild);slider.style.transform="translateX(0)";},800);}},3800);
+let touchInicioY=0;
+document.addEventListener('touchstart',function(e){touchInicioY=e.touches.pageY;},{passive:true});
+document.addEventListener('touchmove',function(e){let touchDesplY=e.touches.pageY-touchInicioY;if(window.scrollY===0&&touchDesplY>0){e.preventDefault();}},{passive:false});
