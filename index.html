@@ -6,6 +6,9 @@
     <title>Basilico Pizzéria</title>
     <link rel="stylesheet" href="estilos.css?v=300.0">
     <style>
+
+
+
         header { display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 20px !important; width: 100% !important; box-sizing: border-box !important; background: transparent !important; }
         .redes-sociales { display: flex !important; gap: 15px !important; align-items: center !important; }
         .icon-svg { width: 32px !important; height: 32px !important; fill: #ffffff !important; }
@@ -167,8 +170,19 @@
                 <div style="background:rgba(255,255,255,0.03); padding:2rem; border-radius:12px; border:1px solid rgba(214,175,55,0.2);">
                     <h2 style="text-align:center; margin-top:0;">🛒 RENDELÉSI KOSÁR</h2>
                     <div id="itCar" style="margin: 1.5rem 0; color:#aaa; font-size:1rem;">A kosár üres.</div>
-                    <label style="display:block; margin-top:1rem; font-size:0.85rem; font-weight:600;">Kuponkód:</label>
-                    <div class="bloque-kupon"><input type="text" id="inpKupon" placeholder="Kuponkód..."><button class="btn-kupon" id="btnAplicarKupon">Aktivál</button></div>
+                    
+<!-- MÓDULO DE CUPÓN REPARADO CON TEXTO VISIBLE Y BOTÓN DE ACTIVACIÓN -->
+<label style="display:block !important; margin-top:12px !important; font-size:15px !important; font-weight:700 !important; color:#ffffff !important; text-align:left !important;">Kuponkód:</label>
+<div class="bloque-kupon" style="display: flex !important; gap: 8px !important; margin-bottom: 15px !important; width: 100% !important; box-sizing: border-box !important;">
+    <!-- Entrada de texto con color amarillo de alto contraste forzado -->
+    <input type="text" id="inpKupon" placeholder="" autocomplete="off" 
+           style="flex-grow: 1 !important; height: 45px !important; line-height: 45px !important; padding: 0px 12px !important; background-color: #000000 !important; border: 2px solid #ffffff !important; color: #d6af37 !important; -webkit-text-fill-color: #d6af37 !important; font-size: 16px !important; font-family: sans-serif !important; font-weight: 700 !important; border-radius: 6px !important; text-transform: uppercase !important; box-sizing: border-box !important; display: block !important;">
+    
+    <!-- El botón físico para activar el descuento -->
+    <button class="btn-kupon" id="btnAplicarKupon" style="height: 45px !important; background: #d6af37 !important; color: #000000 !important; border: none !important; padding: 0px 18px !important; font-weight: 700 !important; font-size: 14px !important; border-radius: 6px !important; cursor: pointer !important; text-transform: uppercase !important; box-sizing: border-box !important;">Aktivál</button>
+</div>
+
+
                     <h3 style="border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem;">Összesen: <span id="tp">0</span> Ft</h3>
                     <div class="form-kosar" style="margin-top:1.5rem;"><label>Teljes név:</label><input type="text" id="inpNev" readonly><label>Szállítási cím:</label><input type="text" id="inpCim" readonly><label>Telefonszám:</label><input type="tel" id="inpTel" readonly></div>
                     <button id="be" style="width:100%; padding:1rem; margin-top:1rem; background:var(--o); color:#000; font-weight:700; border:none; border-radius:8px; cursor:pointer;">Rendelés elküldése</button>
@@ -267,10 +281,34 @@
             });
         }
 
-        document.getElementById('btnAplicarKupon').addEventListener('click', function(e) {
-            e.preventDefault(); const codigo = document.getElementById('inpKupon').value.trim().toUpperCase();
-            if(codigo === 'NIGHT10') { if(descuentoAplicado) return; descuentoAplicado = true; alert('10% kedvezmény levonva.'); actualizarRenderCarrito(); } else { alert('Érvénytelen kupon!'); }
-        });
+// LOGICA DE VERIFICACIÓN AL DAR CLIC EN EL BOTÓN "AKTIVÁL"
+document.getElementById('btnAplicarKupon').addEventListener('click', function(e) {
+    if(e) e.preventDefault(); // Evitamos que la página se refresque
+    
+    const codigoEscrito = document.getElementById('inpKupon').value.trim().toUpperCase();
+    
+    if (codigoEscrito === 'NIGHT10') {
+        if (descuentoAplicado) { 
+            alert('A kupon már érvényesítve van!'); 
+            return; 
+        }
+        descuentoAplicado = true;
+        
+        // Ponemos el cuadro en verde indicando éxito completo
+        const inputKupon = document.getElementById('inpKupon');
+        if(inputKupon) {
+            inputKupon.style.setProperty('border-color', '#2ecc71', 'important');
+            inputKupon.style.setProperty('color', '#2ecc71', 'important');
+            inputKupon.style.setProperty('-webkit-text-fill-color', '#2ecc71', 'important');
+        }
+        
+        alert('Sikeres kupon! 10% kedvezmény levonva.');
+        actualizarRenderCarrito();
+    } else {
+        alert('Érvénytelen kuponkód! Kérjük, írja be a helyes kódot.');
+    }
+});
+
 
         function cargarDatosEnCarrito() {
             if(localStorage.getItem('pesta_registrado') === 'true') {
@@ -338,6 +376,29 @@
             };
         }
     }, 500);
+
+
+
+// PROTECCIÓN DEL BOTÓN DE CONSULTA DEL CARRITO DESDE EL MENÚ
+document.getElementById('lnk-m-carrito-directo').addEventListener('click', function(e) { 
+    e.preventDefault(); 
+    
+    // Verificamos si el usuario ya ha pasado por el formulario de registro o login con éxito
+    const estaLogueado = (document.getElementById('inpNev').value.trim() !== "");
+
+    if (estaLogueado) {
+        // Si ya está identificado, le permitimos ver la ventana independiente del carrito
+        ocultarTodasLasSecciones(); 
+        document.getElementById('s-ventana-carrito').style.setProperty('display', 'block', 'important'); 
+        forzarCierreMenu(); 
+    } else {
+        // Si no está identificado, bloqueamos el acceso y lo mandamos a loguearse
+        alert('Kérjük, először regisztráljon vagy lépjen be a Delivero / Átvétel gombra kattintva a rendelés megtekintéséhez!');
+        forzarCierreMenu();
+        evaluarFlujoAcceso(); // Ejecuta de forma automática el flujo de Login / Registro
+    }
+});
+
 </script>
 
 
