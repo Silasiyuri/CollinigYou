@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>PESTA - Pizza Tú Night</title>
-<link rel="stylesheet" href="estilos.css?v=85.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"><title>Basilico Pizzéria</title>
+<link rel="stylesheet" href="estilos.css?v=300.0">
 </head>
 <body>
 <div id="box-pizza-gourmet" onclick="if(event.target.id!=='close-promo'){document.querySelector('[data-t=\'kosar\']').click();}">
@@ -21,35 +21,50 @@ setTimeout(function(){var p=document.getElementById('box-pizza-gourmet');if(p){p
 </div>
 <div class="redes-sociales"><a href="https://instagram.com" target="_blank">Instagram</a><a href="https://facebook.com" target="_blank">Facebook</a></div>
 </nav>
-<a href="https://maps.app.goo.gl/EwWBRPHndiPpgU2w6?g_st=ic" target="_blank" class="br"><span>★</span> Vélemények</a>
+<a href="https://google.com" target="_blank" class="br"><span>★</span> Vélemények</a>
 <main class="h">
 <div class="cp" id="vp">
 <div class="cb"><input type="text" class="bi" id="bg" placeholder="Keresés..."></div>
 <h1>PESTA</h1><p class="sub-brand">Pizza Tú Night &bull; Budapest</p>
 <div class="grid-uzletek-top">
-<div class="tarjeta-uzlet-top service-info"><h3>🕒 KISZÁLLÍTÁSI INFÓ</h3><p class="bold-p">Nyitvatartás: 18:00 - 04:00</p><p class="small-p">Zónák: Budapest VI, VII, VIII, IX. kerület</p></div>
+<div class="tarjeta-uzlet-top service-info"><h3>🕒 KISZÁLLÍTÁSI INFÓ</h3><p class="bold-p">Nyitvatartás: 18:00 - 04:00</p><p class="small-p">Budapest VI, VII, VIII, IX. kerület</p></div>
 <div class="tarjeta-uzlet-top service-delivero" id="card-delivero"><h3>🛵 DELIVERO</h3><p class="small-p">Házhozszállítás azonnal.</p><p class="action-p">Kattints a termékekhez &rarr;</p></div>
 <div class="tarjeta-uzlet-top service-pickup" id="card-pickup"><h3>🏃 SZEMÉLYES ÁTVÉTEL</h3><p class="small-p">Válaszd ki a legközelebbi üzletet.</p><p class="action-p">Kattints a termékekhez &rarr;</p></div>
 </div>
 <h2 class="title-uzletek">Üzleteink</h2>
-<div class="grid-uzletek">
-<div class="tarjeta-uzlet"><h3>PESTA Gourmet Szalon</h3><p class="dir">1051 Budapest, Sas utca 10.</p><p class="tel">+36 20 390 6539</p><p class="horario">H - V: 11:00 - 04:00</p><div class="botones-tarjeta"><button class="btn-t-action to-menu-btn">Rendelés</button><button class="btn-t-action to-map-btn">Útvonalterv</button></div></div>
-<div class="tarjeta-uzlet"><h3>PESTA Astoria Szeletbár</h3><p class="dir">1052 Budapest, Károly körút 4.</p><p class="tel">+36 20 450 3384</p><p class="horario">Minden nap: 12:00 - 05:00</p><div class="botones-tarjeta"><button class="btn-t-action to-menu-btn">Rendelés</button><button class="btn-t-action to-map-btn">Útvonalterv</button></div></div>
-<div class="tarjeta-uzlet"><h3>PESTA Éjszakai Bázis</h3><p class="dir">1074 Budapest, Dob utca 17.</p><p class="tel">+36 20 443 4728</p><p class="horario">Cs - Szo: 18:00 - 06:00</p><div class="botones-tarjeta"><button class="btn-t-action to-menu-btn">Rendelés</button><button class="btn-t-action to-map-btn">Útvonalterv</button></div></div>
+<!-- CARRUSEL ADAPTADO CON REGLAS DE FLUJO LÍQUIDO CSS -->
+<div class="contenedor-carrusel">
+<div class="wrapper-carrusel">
+<img src="https://unsplash.com" class="carrusel-img">
+<img src="https://unsplash.com" class="carrusel-img">
+<img src="https://unsplash.com" class="carrusel-img">
+<img src="https://unsplash.com" class="carrusel-img">
+<img src="https://unsplash.com" class="carrusel-img">
+<img src="https://unsplash.com" class="carrusel-img">
 </div>
 </div>
+<footer style="margin-top:4rem; padding:2rem 1rem; border-top:1px solid rgba(214,175,55,0.2); width:100%; max-width:1000px; text-align:center; color:#ffffff;">
+<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:1.5rem; margin-bottom:1.5rem;">
+<div><h4 style="color:var(--o); margin-bottom:0.4rem;">📍 CÍMÜNK</h4><p style="font-size:0.88rem; opacity:0.85;">Budapest, Kőfaragó u. 15, 1085</p></div>
+<div><h4 style="color:var(--o); margin-bottom:0.4rem;">📞 TELEFON</h4><p style="font-size:0.88rem; opacity:0.85;">(06 1) 781 0538</p></div>
+<div><h4 style="color:var(--o); margin-bottom:0.4rem;">🕒 NYITVATARTÁS</h4><p style="font-size:0.88rem; opacity:0.85;">Hétfő - Szombat: 12:00 - 21:00</p></div>
+</div>
+<div style="font-size:0.75rem; opacity:0.5; border-top:1px solid rgba(255,255,255,0.05); padding-top:1rem;">© 2026 Basilico Pizzéria. | <a href="#" style="color:#fff;">Impresszum</a> | <a href="#" style="color:#fff;">Adatkezelés</a></div>
+</footer>
+</div>
+<div id="s-reg" class="sc"><div class="b-contenido"><h2>RENDELÉSI REGISZTRÁCIÓ</h2><p style="font-size:0.85rem;color:var(--text-muted);text-align:center;margin-bottom:1rem;">Adja meg adatait a belépéshez.</p><div class="form-kosar"><label>Teljes név:</label><input type="text" id="regNev" placeholder="Kovács János"><label>Szállítási cím:</label><input type="text" id="regCim" placeholder="Utca, házszám..."><label>Telefonszám:</label><input type="tel" id="regTel" placeholder="+36..."><button id="btnGuardarRegistro" style="width:100%;padding:0.9rem;margin-top:1.5rem;background:var(--o);color:#000;font-weight:700;text-transform:uppercase;cursor:pointer;border:none;border-radius:8px;">Mentés és Belépés</button></div></div></div>
 <div id="s-menu" class="sc"><div class="b-contenido"><h2>KÉZMŰVES MENÜ</h2>
-<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>I. PESTA GOURMET</h3><p>Paradicsomszósz, bivalymozzarella, bazsalikom krém, olívaolaj.</p></div><div class="platillo-action"><p class="precio">3400 Ft</p><button class="ba" data-n="I. PESTA GOURMET" data-p="3400" data-i="https://unsplash.com">Kosárba</button></div></div>
-<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>II. TÚ NIGHT ÉJSZAKA</h3><p>Füstölt szalámi, mozzarella, szarvasgombás virágméz, friss rukkola.</p></div><div class="platillo-action"><p class="precio">3900 Ft</p><button class="ba" data-n="II. TÚ NIGHT ÉJSZAKA" data-p="3900" data-i="https://unsplash.com">Kosárba</button></div></div>
-<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>III. PESTI CSÍPŐS</h3><p>Paradicsomos alap, pikáns csípős kolbász, lila hagyma, Erős Pista krém.</p></div><div class="platillo-action"><p class="precio">3800 Ft</p><button class="ba" data-n="III. PESTI CSÍPŐS" data-p="3800" data-i="https://unsplash.com">Kosárba</button></div></div>
-<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>IV. HUNGARICUM</h3><p>Fokhagymás tejföl alap, ropogós füstölt szalonna, trappista sajt.</p></div><div class="platillo-action"><p class="precio">3700 Ft</p><button class="ba" data-n="IV. HUNGARICUM" data-p="3700" data-i="https://unsplash.com">Kosárba</button></div></div>
+<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>I. PESTA GOURMET</h3><p>Paradicsomszósz, bivalymozzarella, bazsalikom krém.</p></div><div class="platillo-action"><p class="precio">3400 Ft</p><button class="ba" data-n="I. PESTA GOURMET" data-p="3400" data-i="https://unsplash.com">Kosárba</button></div></div>
+<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>II. TÚ NIGHT ÉJSZAKA</h3><p>Szalámi, mozzarella, szarvasgombás virágméz, rukkola.</p></div><div class="platillo-action"><p class="precio">3900 Ft</p><button class="ba" data-n="II. TÚ NIGHT ÉJSZAKA" data-p="3900" data-i="https://unsplash.com">Kosárba</button></div></div>
+<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>III. PESTI CSÍPŐS</h3><p>Kolbász, lila hagyma, Erős Pista krém.</p></div><div class="platillo-action"><p class="precio">3800 Ft</p><button class="ba" data-n="III. PESTI CSÍPŐS" data-p="3800" data-i="https://unsplash.com">Kosárba</button></div></div>
+<div class="platillo"><img src="https://unsplash.com" class="platillo-img"><div class="platillo-desc"><h3>IV. HUNGARICUM</h3><p>Fokhagymás tejföl alap, füstölt szalonna, sajt.</p></div><div class="platillo-action"><p class="precio">3700 Ft</p><button class="ba" data-n="IV. HUNGARICUM" data-p="3700" data-i="https://unsplash.com">Kosárba</button></div></div>
 </div></div>
-<div id="s-kosar" class="sc"><div class="b-contenido"><h2>ÖN KOSARA</h2><div id="itCar"></div><h3 class="total-compra">Összesen: <span id="tp">0</span> Ft</h3><div class="form-kosar"><label>Kuponkód (Opcionális):</label><div class="bloque-kupon"><input type="text" id="inpKupon" placeholder="Kuponkód..."><button class="btn-kupon" id="btnAplicarKupon">Aktivál</button></div><label>Szállítási cím:</label><input type="text" id="inpCim" placeholder="Kerület, utca, házszám..."><label>Telefonszám:</label><input type="tel" id="inpTel" placeholder="+36..."></div><div style="display:block;width:100%;"><button id="be">Rendelés elküldése</button></div></div></div>
-<div id="s-filo" class="sc"><div class="b-contenido"><h2>A MANIFESZTUM</h2><div class="ci">48 órán át pihentetjük az élő vadkovászt Budapest szívében.</div></div></div>
-<div id="s-deliv" class="sc"><div class="b-contenido"><h2>ÉJSZAKAI FUTÁR</h2><div class="ci"><h3>WOLT / FOODORA</h3><br><p>Nyitvatartás: 18:00 - 04:00 (VI, VII, VIII, IX kerület)</p></div></div></div>
+<div id="s-kosar" class="sc"><div class="b-contenido"><h2>ÖN KOSARA</h2><div id="itCar"></div><h3 class="total-compra">Összesen: <span id="tp">0</span> Ft</h3><div class="form-kosar"><label>Kuponkód (Opcionális):</label><div class="bloque-kupon"><input type="text" id="inpKupon" placeholder="Kuponkód..."><button class="btn-kupon" id="btnAplicarKupon">Aktivál</button></div><label>Teljes név:</label><input type="text" id="inpNev" placeholder="Írja be a nevét..."><label>Szállítási cím:</label><input type="text" id="inpCim" placeholder="Kerület, utca, házszám..."><label>Telefonszám:</label><input type="tel" id="inpTel" placeholder="+36..."></div><div style="display:block;width:100%;"><button id="be">Rendelés elküldése</button></div></div></div>
+<div id="s-filo" class="sc"><div class="b-contenido"><h2>A MANIFESZTUM</h2><div class="ci">A vadkovászt 48 órán át pihentetjük Budapest szívében.</div></div></div>
+<div id="s-deliv" class="sc"><div class="b-contenido"><h2>ÉJSZAKAI FUTÁR</h2><div class="ci"><h3>WOLT / FOODORA</h3><p>Nyitvatartás: 18:00 - 04:00 (VI, VII, VIII, IX kerület)</p></div></div></div>
 <div id="s-terkep" class="sc"><div class="b-contenido"><h2>SZÁLLÍTÁSI ZÓNA</h2><div class="contenedor-mapa"><iframe src="https://google.com" width="100%" height="350" style="border:0;border-radius:12px;" loading="lazy"></iframe></div></div></div>
 <div id="s-cont" class="sc"><div class="b-contenido"><h2>KAPCSOLAT</h2><div class="ci"><p>E-mail: ciao@pestabudapest.hu</p></div></div></div>
 </main>
-<script src="motor.js?v=85.0"></script>
+<script src="motor.js?v=300.0"></script>
 </body>
 </html>
