@@ -1,6 +1,21 @@
 :root { --o:#d6af37; --b:#182026; --card-bg:#ffffff; --text-dark:#1e252b; --text-muted:#515d68; --border-light:rgba(0,0,0,0.08); }
 * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-body { background-color:var(--b)!important; color:var(--text-dark); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; overflow-x:hidden; width:100%; min-height:100vh; }
+
+/* Evita el reinicio y rebote al deslizar hacia abajo en móviles */
+html {
+    overscroll-behavior-y: none;
+}
+
+body { 
+    background-color:var(--b)!important; 
+    color:var(--text-dark); 
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; 
+    overflow-x:hidden; 
+    width:100%; 
+    min-height:100vh; 
+    overscroll-behavior-y: none; /* Bloqueo secundario para compatibilidad global */
+}
+
 header { width:100%; padding:1.2rem; display:flex; justify-content:space-between; align-items:center; position:fixed; top:0; left:0; z-index:100; pointer-events:none; }
 .bp { background:none; border:none; cursor:pointer; display:flex; flex-direction:column; gap:5px; pointer-events:auto; padding:10px; }
 .bp div { width:28px; height:3px; background-color:var(--o); transition:0.3s; border-radius:2px; }
@@ -59,7 +74,7 @@ main { margin-top:5rem; padding:1rem 0.8rem; min-height:calc(100vh - 5rem); posi
 #be { width:100%; padding:0.9rem; margin-top:1.5rem; background:var(--o); color:#000; font-weight:700; text-transform:uppercase; cursor:pointer; border:none; border-radius:8px; font-size:0.95rem; }
 .contenedor-mapa { width:100%; border-radius:12px; overflow:hidden; }
 #box-pizza-gourmet { display:none; position:fixed!important; top:50%!important; left:50%!important; transform:translate(-50%,-50%) scale(0.3)!important; opacity:0!important; width:min(290px,92vw)!important; height:min(290px,92vw)!important; background:#e74c3c!important; color:#ffffff!important; border-radius:50%!important; box-shadow:0 20px 60px rgba(0,0,0,0.7)!important; z-index:999999999!important; flex-direction:column!important; align-items:center!important; justify-content:center!important; text-align:center!important; padding:min(30px,5vw)!important; cursor:pointer!important; border:4px solid #ffffff!important; box-sizing:border-box!important; transition:transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275),opacity 0.4s ease!important; }
-#close-promo { position:absolute!important; top:12px!important; right:22px!important; font-weight:bold!important; font-size:1.6rem!important; color:rgba(255,255,255,0.8)!important; cursor:pointer!important; line-height:1; font-family:sans-serif!important; }
+#close-promo { position:absolute!important; top:12px!important; right:22px!important; font-weight:bold!important; font-size:1.6rem!important; color:rgba(255,255,255,0.😎!important; cursor:pointer!important; line-height:1; font-family:sans-serif!important; }
 .txt-gourmet-top { margin:0!important; font-size:0.82rem!important; font-weight:bold!important; letter-spacing:1.5px!important; text-transform:uppercase!important; color:#f1c40f!important; font-family:sans-serif!important; }
 .txt-gourmet-num { margin:2px 0!important; font-size:3.4rem!important; font-weight:900!important; letter-spacing:-2px!important; line-height:1!important; font-family:sans-serif!important; }
 .txt-gourmet-sub { margin:0 0 10px 0!important; font-size:0.8rem!important; font-weight:600!important; opacity:0.9!important; max-width:180px!important; line-height:1.2!important; color:#ffffff!important; font-family:sans-serif!important; }
