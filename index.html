@@ -503,63 +503,54 @@ document.getElementById('btnAplicarKupon').addEventListener('click', function(e)
 
 <!-- CÓDIGO FORZADO PARA CENTRAR EL INICIO AL PULSAR KEZDŐLAP -->
 <script>
-    setInterval(function() {
-        const botonHome = document.getElementById('lnk-m-home');
-        if (botonHome) {
-            botonHome.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Ocultamos todas las secciones activas
-                if (typeof ocultarTodasLasSecciones === "function") {
-                    ocultarTodasLasSecciones();
-                } else {
-                    document.querySelectorAll('.sc, #s-tienda, #s-ventana-carrito, #s-reg, #s-login, #s-cont').forEach(s => s.style.display = 'none');
-                }
-                
-                // Forzamos que la sección principal aparezca centrada al 100%
-                const vp = document.getElementById('vp');
-                if (vp) {
-                    vp.style.setProperty('display', 'flex', 'important');
-                    vp.style.setProperty('flex-direction', 'column', 'important');
-                    vp.style.setProperty('align-items', 'center', 'important');
-                    vp.style.setProperty('justify-content', 'center', 'important');
-                    vp.style.setProperty('text-align', 'center', 'important');
-                    vp.style.setProperty('width', '100%', 'important');
-                }
-                
-                // Cerramos el menú lateral
-                if (typeof forzarCierreMenu === "function") {
-                    forzarCierreMenu();
-                } else {
-                    const check = document.getElementById('menu-check-supremo');
-                    if (check) check.checked = false;
-                }
-            };
-        }
-    }, 500);
+   // CORRECCIÓN INTERNA: FLUJO DE ACCESO INTELIGENTE MULTI-DISPOSITIVO
+function evaluarFlujoAcceso() {
+    modoSoloVer = false; // Desactivamos el modo catálogo para permitir la compra
+    ocultarTodasLasSecciones();
 
-
-
-// PROTECCIÓN DEL BOTÓN DE CONSULTA DEL CARRITO DESDE EL MENÚ
-document.getElementById('lnk-m-carrito-directo').addEventListener('click', function(e) { 
-    e.preventDefault(); 
-    
-    // Verificamos si el usuario ya ha pasado por el formulario de registro o login con éxito
-    const estaLogueado = (document.getElementById('inpNev').value.trim() !== "");
-
-    if (estaLogueado) {
-        // Si ya está identificado, le permitimos ver la ventana independiente del carrito
-        ocultarTodasLasSecciones(); 
-        document.getElementById('s-ventana-carrito').style.setProperty('display', 'block', 'important'); 
-        forzarCierreMenu(); 
-    } else {
-        // Si no está identificado, bloqueamos el acceso y lo mandamos a loguearse
-        alert('Kérjük, először regisztráljon vagy lépjen be a Delivero / Átvétel gombra kattintva a rendelés megtekintéséhez!');
-        forzarCierreMenu();
-        evaluarFlujoAcceso(); // Ejecuta de forma automática el flujo de Login / Registro
+    // CASO 1: Si el usuario ya se registró y sus datos están guardados en este dispositivo
+    if (localStorage.getItem('pesta_registrado') === 'true') {
+        console.log("Készülék felismerve: Automatikus beléptetés a rendszerbe.");
+        cargarDatosEnCarrito(); // Descarga su nombre, dirección y teléfono
+        mostrarTiendaDeProductos(); // Lo manda directo a pedir pizzas con extras
+        return;
     }
-});
+
+    // CASO 2: Si es un navegador, teléfono o computadora NUEVA (Doble opción en pantalla)
+    // En lugar de mandarlo directo a registrarse, abrimos un panel de decisión limpio
+    console.log("Új készülék vagy böngésző detektálva. Bejelentkezési opciók megjelenítése.");
+    
+    // Mostramos la sección de LOGIN por defecto para que ponga su contraseña si ya tiene cuenta
+    document.getElementById('s-login').style.setProperty('display', 'block', 'important');
+    
+    // PARCHE VISUAL EN CALIENTE: Añadimos un botón sutil abajo en la pantalla de Login
+    // por si el usuario verdaderamente es nuevo y necesita ir al formulario de Registro
+    const contenedorLogin = document.querySelector('#s-login .form-kosar');
+    if (contenedorLogin && !document.getElementById('lnk-conmutador-registro')) {
+        const txtCambio = document.createElement('p');
+        txtCambio.id = 'lnk-conmutador-registro';
+        txtCambio.innerHTML = `Még nincs fiókja? <span style="color:#d6af37; cursor:pointer; font-weight:700; text-decoration:underline;" onclick="document.getElementById('s-login').style.display='none'; document.getElementById('s-reg').style.setProperty('display','block','important');">Regisztráljon itt &rarr;</span>`;
+        txtCambio.style.setProperty('text-align', 'center', 'important');
+        txtCambio.style.setProperty('margin-top', '15px', 'important');
+        txtCambio.style.setProperty('color', '#aaaaaa', 'important');
+        txtCambio.style.setProperty('font-size', '0.95rem', 'important');
+        contenedorLogin.appendChild(txtCambio);
+    }
+    
+    // De igual forma, añadimos un botón de retorno en la pantalla de Registro por si se equivoca
+    const contenedorReg = document.querySelector('#s-reg .form-kosar');
+    if (contenedorReg && !document.getElementById('lnk-conmutador-login')) {
+        const txtCambioReg = document.createElement('p');
+        txtCambioReg.id = 'lnk-conmutador-login';
+        txtCambioReg.innerHTML = `Már van fiókja? <span style="color:#d6af37; cursor:pointer; font-weight:700; text-decoration:underline;" onclick="document.getElementById('s-reg').style.display='none'; document.getElementById('s-login').style.setProperty('display','block','important');">&larr; Jelentkezzen be itt</span>`;
+        txtCambioReg.style.setProperty('text-align', 'center', 'important');
+        txtCambioReg.style.setProperty('margin-top', '15px', 'important');
+        txtCambioReg.style.setProperty('color', '#aaaaaa', 'important');
+        txtCambioReg.style.setProperty('font-size', '0.95rem', 'important');
+        contenedorReg.appendChild(txtCambioReg);
+    }
+}
+
 
 </script>
 
