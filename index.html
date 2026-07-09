@@ -10,10 +10,48 @@
 
 
         header { display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 20px !important; width: 100% !important; box-sizing: border-box !important; background: transparent !important; }
-        .redes-sociales { display: flex !important; gap: 15px !important; align-items: center !important; }
-        .icon-svg { width: 32px !important; height: 32px !important; fill: #ffffff !important; }
-        .redes-sociales a:hover .icon-svg { fill: #d6af37 !important; }
-        
+        /* CONVERSIÓN DE REDES SOCIALES A BOTONES FÍSICOS REALES */
+.redes-sociales {
+    display: flex !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+.redes-sociales a {
+    text-decoration: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 42px !important; /* Altura de botón estándar */
+    padding: 0px 16px !important; /* Espacio horizontal para darle forma de botón */
+    background-color: #111111 !important; /* Fondo negro sólido de alto contraste */
+    border: 2px solid #ffffff !important; /* Borde blanco grueso y visible */
+    border-radius: 6px !important; /* Esquinas redondeadas de tu plantilla */
+    cursor: pointer !important;
+    transition: all 0.2s ease-in-out !important;
+    box-sizing: border-box !important;
+}
+
+/* EFECTO HOVER: Al pasar el cursor o tocar en el móvil, el botón completo se vuelve dorado Basilico */
+.redes-sociales a:hover {
+    background-color: #d6af37 !important;
+    border-color: #d6af37 !important;
+    transform: scale(1.05) !important; /* Efecto de relieve al hacer clic */
+}
+
+/* Ajuste del icono SVG interno para que cambie de color en armonía con el botón */
+.icon-svg {
+    width: 22px !important;
+    height: 22px !important;
+    fill: #ffffff !important; /* Dibujo blanco por defecto */
+    transition: fill 0.2s ease !important;
+    display: block !important;
+}
+
+.redes-sociales a:hover .icon-svg {
+    fill: #000000 !important; /* El dibujo se vuelve negro al activarse para contrastar con el dorado */
+}
+
         #menu-check-supremo { display: none !important; }
         
         .btn-tres-rayas-css {
@@ -58,10 +96,10 @@
         
         .producto-card { background: transparent !important; border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; width: 100%; }
         .producto-info { padding: 1.2rem; display: flex; flex-direction: column; flex-grow: 1; }
-        .producto-info h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #fff; }
-        .producto-info p { margin: 0 0 1rem 0; font-size: 0.9rem; color: #aaa; flex-grow: 1; }
+        .producto-info h3 { margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #000000; }
+        .producto-info p { margin: 0 0 1rem 0; font-size: 0.9rem; color: #000000; flex-grow: 1; }
         .producto-meta { display: flex; justify-content: space-between; align-items: center; }
-        .producto-precio { font-weight: 700; color: #d6af37; font-size: 1.1rem; }
+        .producto-precio { font-weight: 700; color: #000000; font-size: 1.1rem; }
         
         .btn-flotante-kosar {
             position: fixed !important;
@@ -82,6 +120,7 @@
         .bloque-kupon { display: flex !important; gap: 8px !important; margin-bottom: 1rem !important; }
         .bloque-kupon input { flex-grow: 1 !important; padding: 0.6rem !important; background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 6px !important; }
         .btn-kupon { background: #d6af37 !important; color: #000 !important; border: none !important; padding: 0.6rem 1.2rem !important; font-weight: 700 !important; border-radius: 6px !important; cursor: pointer; }
+
     </style>
 </head>
 <body>
@@ -99,12 +138,10 @@
     <label for="menu-check-supremo" class="btn-tres-rayas-css"><div></div><div></div><div></div></label>
 
     <header>
-        <div style="width: 50px;"></div>
-       
-            
-    </header>
-
-    <!-- BOTONES DE REDES SOCIALES FLOTANTES INDESTRUCTIBLES (ESQUINA SUPERIOR DERECHA) -->
+    <!-- Dejamos la cabecera vacía para que motor.js no capture nada en esa zona -->
+    <div style="width: 50px;"></div>
+</header>
+<!-- BOTONES DE REDES SOCIALES FLOTANTES INDESTRUCTIBLES (ESQUINA SUPERIOR DERECHA) -->
 <div style="position: fixed !important; top: 15px !important; right: 15px !important; display: flex !important; gap: 10px !important; z-index: 999999999 !important; box-sizing: border-box !important;">
     
     <!-- Botón de Instagram Blindado -->
@@ -127,7 +164,6 @@
         </svg>
     </a>
 </div>
-
 
     <div id="menu-lateral-css" class="menu-lateral-css">
         <div style="text-align: right; margin-bottom: 20px;"><span onclick="forzarCierreMenu()" style="color: #d6af37; font-size: 2rem; cursor: pointer; font-weight: bold;">&times;</span></div>
@@ -153,15 +189,14 @@
             </div>
             <h2 class="title-uzletek">Üzleteink</h2>
 
-             <!-- carrusel -->
             <div class="contenedor-carrusel"><div class="wrapper-carrusel">
-                <img src="foto.jpg" class="carrusel-img">
-                <img src="foto.jpg" class="carrusel-img">
-                <img src="foto.jpg" class="carrusel-img">
-                <img src="pppp.jpg" class="carrusel-img">
-                <img src="foto.jpg" class="carrusel-img">
-                <img src="foto.jpg" class="carrusel-img">
-            </div></div>
+<img src="foto.jpg" class="carrusel-img">
+<img src="foto.jpg" class="carrusel-img">
+</div>
+
+
+</div>
+
         </div>
 
         <!-- VISTA 2: FORMULARIO DE REGISTRO (PRIMERA VEZ) -->
@@ -174,13 +209,25 @@
         <div id="s-tienda" class="sc" style="display:none;">
             <div class="b-contenido" style="max-width:1200px; width:100%;">
                 <div class="tabs-productos">
-                    <button class="tab-btn active" id="tab-pizzas" onclick="cambiarTab('pizzas')">🍕 Pizzák</button>
+                    <button class="tab-btn active" id="tab-pizzas" onclick="cambiarTab('pizzas')">🍕Pizza </button>
                     <button class="tab-btn" id="tab-edito" onclick="cambiarTab('edito')">🥤 Üdítők</button>
                     <button class="tab-btn" id="tab-etelek" onclick="cambiarTab('etelek')">🍝 Ételek</button>
                     <button class="tab-btn" id="tab-deszertek" onclick="cambiarTab('deszertek')">🍰 Deszertek</button>
                 </div>
                 <div id="cat-pizzas" class="tab-content active">
-                    <div class="producto-card"><div class="producto-info"><h3>I. Pesta Gourmet</h3><p>Paradicsomszósz, bivalymozzarella, bazsalikom krém.</p><div class="producto-meta"><span class="producto-precio">3400 Ft</span><button class="btn-agregar" data-name="I. Pesta Gourmet" data-price="3400">Kosárba</button></div></div></div>
+                    <div class="producto-card"><div class="producto-info">
+<h3>I. Pesta Gourmet</h3>
+<p>Paradicsomszósz, bivalymozzarella, bazsalikom krém.</p>
+<div class="producto-meta"><span class="producto-precio">3400 Ft</span><button 
+
+class="btn-agregar" data-name="I. Pesta Gourmet" data-price="3400">Kosárba</button>
+
+
+</div>
+</div></div>
+
+
+
                 </div>
                 <div id="cat-edito" class="tab-content">
                     <div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div>
@@ -508,6 +555,400 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
         <a href="https://google.com" target="_blank" class="btn-velemenyek-fijo-derecha">★ Vélemények</a>
     </div>
 </div>
+<!-- ESTILOS DE LA VENTANA MODAL PARA INGREDIENTES EXTRAS -->
+<style>
+    /* Fondo oscuro semitransparente que cubre la pantalla */
+    .pesta-modal-extras {
+        display: none; /* Escondido por defecto */
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        width: 100% !important; height: 100vh !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        z-index: 999999999 !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    /* Caja blanca/oscura central de la ventana emergente */
+    .modal-extras-contenido {
+        background: #111111 !important;
+        border: 2px solid #d6af37 !important;
+        border-radius: 12px !important;
+        width: 90% !important;
+        max-width: 450px !important;
+        padding: 25px !important;
+        box-sizing: border-box !important;
+        color: #ffffff !important;
+        position: relative !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    }
+    .modal-extras-titulo { margin: 0 0 15px 0 !important; font-size: 1.4rem !important; color: #d6af37 !important; text-align: center !important; }
+    /* Lista de ingredientes extras con su signo de más */
+    .fila-ingrediente-extra {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    /* Botón redondo con signo de más (+) */
+    .btn-signo-mas-extra {
+        background: #d6af37 !important;
+        color: #000000 !important;
+        border: none !important;
+        width: 32px !important; height: 32px !important;
+        border-radius: 50% !important;
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: transform 0.1s ease !important;
+    }
+    .btn-signo-mas-extra:active { transform: scale(0.9) !important; }
+    
+    /* Contador de extras seleccionados */
+    .contador-extra-badge {
+        background: #2ecc71 !important;
+        color: #ffffff !important;
+        padding: 2px 8px !important;
+        border-radius: 10px !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        margin-left: 8px !important;
+        display: none;
+    }
+</style>
+<style>
+    .pesta-modal-extras-independiente {
+        display: none; position: fixed !important; top: 0 !important; left: 0 !important;
+        width: 100% !important; height: 100vh !important; background: rgba(0, 0, 0, 0.85) !important;
+        z-index: 999999999 !important; align-items: center !important; justify-content: center !important;
+    }
+    .caja-extras-dinamica {
+        background: #111111 !important; border: 2px solid #d6af37 !important; border-radius: 12px !important;
+        width: 92% !important; max-width: 440px !important; padding: 25px !important; box-sizing: border-box !important; color: #ffffff !important; position: relative !important;
+    }
+    .titulo-pizza-modal { margin: 0 0 5px 0 !important; font-size: 1.4rem !important; color: #d6af37 !important; text-align: center !important; }
+    .item-extra-linea { display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 12px 0 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+    .btn-mas-nativo {
+        background: #d6af37 !important; color: #000000 !important; border: none !important;
+        width: 34px !important; height: 34px !important; border-radius: 50% !important;
+        font-size: 1.2rem !important; font-weight: 700 !important; cursor: pointer !important;
+        display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    }
+    .badge-numero-verde { background: #2ecc71 !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 10px !important; font-size: 0.8rem !important; font-weight: 700 !important; margin-left: 8px !important; }
+</style>
+
+<div id="pestaModalExtrasIndependiente" class="pesta-modal-extras-independiente" onclick="if(event.target === this) cerrarVentanaExtras();">
+    <div class="caja-extras-dinamica">
+        <span onclick="cerrarVentanaExtras()" style="position: absolute !important; top: 10px !important; right: 15px !important; color: #aaa; font-size: 1.8rem; cursor: pointer; font-weight: bold;">&times;</span>
+        <h3 id="txtNombrePizzaModal" class="titulo-pizza-modal">Pizza</h3>
+        <p style="text-align: center; color: #aaa; font-size: 0.85rem; margin-top: 0; margin-bottom: 20px;">Válasszon extra feltéteket ehhez a termékhez:</p>
+        <div id="contenedorListaExtrasDinamicos" style="max-height: 240px; overflow-y: auto; margin-bottom: 20px;"></div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 1.1rem; font-weight: 700;">Ár: <span id="txtPrecioPizzaModal">0</span> Ft</span>
+            <button onclick="enviarPizzaFinalAlCarrito()" style="background: #d6af37; color: #000; border: none; padding: 10px 22px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase;">Kosárba tesz</button>
+        </div>
+    </div>
+</div>
+<script>
+    let datosPizzaActiva = { nombre: "", precioBase: 0, precioAcumulado: 0, extras: {} };
+
+    const CatalogoExtrasDisponibles = [
+        { id: "sajt", nombre: "Extra Sajt", precio: 400 },
+        { id: "gomba", nombre: "Gomba", precio: 300 },
+        { id: "sonka", nombre: "Sonka", precio: 450 },
+        { id: "kukorica", nombre: "Kukorica", precio: 250 }
+    ];
+
+    function inicializarVentanaExtras(nombreProducto, precioProducto) {
+        datosPizzaActiva.nombre = nombreProducto;
+        datosPizzaActiva.precioBase = parseInt(precioProducto);
+        datosPizzaActiva.precioAcumulado = parseInt(precioProducto);
+        datosPizzaActiva.extras = {};
+
+        document.getElementById('txtNombrePizzaModal').innerText = nombreProducto;
+        document.getElementById('txtPrecioPizzaModal').innerText = precioProducto;
+
+        let htmlLista = "";
+        CatalogoExtrasDisponibles.forEach(item => {
+            datosPizzaActiva.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
+            htmlLista += `
+                <div class="item-extra-linea">
+                    <span>${item.nombre} (+${item.precio} Ft) <span id="num-badge-${item.id}" class="badge-numero-verde" style="display:none;">0</span></span>
+                    <button class="btn-mas-nativo" onclick="incrementarIngredienteExtra('${item.id}')">+</button>
+                </div>
+            `;
+        });
+        document.getElementById('contenedorListaExtrasDinamicos').innerHTML = htmlLista;
+        document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'flex', 'important');
+    }
+
+    function cerrarVentanaExtras() {
+        document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'none', 'important');
+    }
+
+    function incrementarIngredienteExtra(idItem) {
+        let ingrediente = datosPizzaActiva.extras[idItem];
+        ingrediente.cantidad += 1;
+        datosPizzaActiva.precioAcumulado += ingrediente.precio;
+        document.getElementById('txtPrecioPizzaModal').innerText = datosPizzaActiva.precioAcumulado;
+
+        const badge = document.getElementById('num-badge-' + idItem);
+        if (badge) {
+            badge.innerText = ingrediente.cantidad;
+            badge.style.display = "inline-block";
+        }
+    }
+</script>
+<script>
+    function enviarPizzaFinalAlCarrito() {
+        let nombreDetallado = datosPizzaActiva.nombre;
+        let listaNombresExtras = [];
+
+        for (let id in datosPizzaActiva.extras) {
+            let item = datosPizzaActiva.extras[id];
+            if (item.cantidad > 0) {
+                listaNombresExtras.push(`${item.nombre} (x${item.cantidad})`);
+            }
+        }
+
+        if (listaNombresExtras.length > 0) {
+            nombreDetallado += ` (+Extra: ${listaNombresExtras.join(', ')})`;
+        }
+
+        // Envía el producto con el precio actualizado ÚNICAMENTE al darle al botón interno del modal
+        if (typeof agregarAlCarrito === "function") {
+            agregarAlCarrito(nombreDetallado, datosPizzaActiva.precioAcumulado);
+        } else if (typeof carritoItems !== "undefined") {
+            carritoItems.push({ nombre: nombreDetallado, precio: datosPizzaActiva.precioAcumulado });
+            if (typeof actualizarRenderCarrito === "function") actualizarRenderCarrito();
+        }
+        cerrarVentanaExtras();
+    }
+
+    // VIGILANTE: Sobreescribe los botones del catálogo para que NUNCA envíen directo, sino que abran el modal
+    setInterval(function() {
+        if (typeof modoSoloVer !== "undefined" && !modoSoloVer) {
+            document.querySelectorAll('.btn-agregar').forEach(btn => {
+                if (btn.innerText === "Választ" && !btn.hasAttribute('data-modal-dinamico-listo')) {
+                    btn.setAttribute('data-modal-dinamico-listo', 'true');
+                    btn.onclick = function(e) {
+                        if(e) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+                        const name = this.getAttribute('data-name');
+                        const price = this.getAttribute('data-price');
+                        inicializarVentanaExtras(name, price); // Abre el modal de forma obligatoria
+                    };
+                }
+            });
+        }
+    }, 500);
+</script>
+<!-- STÍLUSOK A TERMÉK MELLETTI PLUSZ GOMBHOZ ÉS A MODALHOZ -->
+<style>
+    /* Botón redondo dorado con el signo de más (+) al lado del precio */
+    .btn-nyito-extras-basilico {
+        background: #d6af37 !important;
+        color: #000000 !important;
+        border: none !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 50% !important; /* Forma circular perfecta */
+        font-size: 1.4rem !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: transform 0.15s ease, background-color 0.15s !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .btn-nyito-extras-basilico:hover {
+        background-color: #ffffff !important;
+        transform: scale(1.1) !important;
+    }
+
+    /* Fondo oscuro traslúcido para cubrir toda la pantalla */
+    .pesta-modal-extras-independiente {
+        display: none;
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        width: 100% !important; height: 100vh !important;
+        background: rgba(0, 0, 0, 0.85) !important;
+        z-index: 999999999 !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    /* Caja central oscura elegante con el marco dorado de tu marca */
+    .caja-extras-dinamica {
+        background: #111111 !important;
+        border: 2px solid #d6af37 !important;
+        border-radius: 12px !important;
+        width: 92% !important;
+        max-width: 440px !important;
+        padding: 25px !important;
+        box-sizing: border-box !important;
+        color: #ffffff !important;
+        position: relative !important;
+    }
+    .titulo-pizza-modal { margin: 0 0 5px 0 !important; font-size: 1.4rem !important; color: #d6af37 !important; text-align: center !important; }
+    .item-extra-linea { display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 12px 0 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important; }
+    
+    /* Botón interno del modal con signo más */
+    .btn-mas-nativo {
+        background: #d6af37 !important; color: #000000 !important; border: none !important;
+        width: 34px !important; height: 34px !important; border-radius: 50% !important;
+        font-size: 1.2rem !important; font-weight: 700 !important; cursor: pointer !important;
+        display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    }
+    .badge-numero-verde { background: #2ecc71 !important; color: #ffffff !important; padding: 2px 8px !important; border-radius: 10px !important; font-size: 0.8rem !important; font-weight: 700 !important; margin-left: 8px !important; }
+</style>
+<!-- ESTRUCTURA VISUAL DE LA VENTANA EMERGENTE -->
+<div id="pestaModalExtrasIndependiente" class="pesta-modal-extras-independiente" onclick="if(event.target === this) cerrarVentanaExtras();">
+    <div class="caja-extras-dinamica">
+        <span onclick="cerrarVentanaExtras()" style="position: absolute !important; top: 10px !important; right: 15px !important; color: #aaa; font-size: 1.8rem; cursor: pointer; font-weight: bold;">&times;</span>
+        <h3 id="txtNombrePizzaModal" class="titulo-pizza-modal">Pizza</h3>
+        <p style="text-align: center; color: #aaa; font-size: 0.85rem; margin-top: 0; margin-bottom: 20px;">Válasszon extra feltéteket ehhez a termékhez:</p>
+        
+        <!-- Contenedor donde se cargan dinámicamente los extras -->
+        <div id="contenedorListaExtrasDinamicos" style="max-height: 240px; overflow-y: auto; margin-bottom: 20px;"></div>
+        
+        <div style="border-top: 1px solid rgba(255,255,255,0.15); padding-top: 15px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 1.1rem; font-weight: 700;">Ár: <span id="txtPrecioPizzaModal">0</span> Ft</span>
+            <button onclick="enviarPizzaFinalAlCarrito()" style="background: #d6af37; color: #000; border: none; padding: 10px 22px; font-weight: 700; border-radius: 6px; cursor: pointer; text-transform: uppercase;">Kosárba tesz</button>
+        </div>
+    </div>
+</div>
+<script>
+    let datosPizzaActiva = { nombre: "", precioBase: 0, precioAcumulado: 0, extras: {} };
+
+    // Listado maestro de ingredientes adicionales con sus precios en Florines (Ft)
+    const CatalogoExtrasDisponibles = [
+        { id: "sajt", nombre: "Extra Sajt", precio: 400 },
+        { id: "gomba", nombre: "Gomba", precio: 300 },
+        { id: "sonka", nombre: "Sonka", precio: 450 },
+        { id: "kukorica", nombre: "Kukorica", precio: 250 }
+    ];
+
+    // Limpia y carga los datos del modal cada vez que se pulsa un producto
+    function inicializarVentanaExtras(nombreProducto, precioProducto) {
+        datosPizzaActiva.nombre = nombreProducto;
+        datosPizzaActiva.precioBase = parseInt(precioProducto);
+        datosPizzaActiva.precioAcumulado = parseInt(precioProducto);
+        datosPizzaActiva.extras = {};
+
+        document.getElementById('txtNombrePizzaModal').innerText = nombreProducto;
+        document.getElementById('txtPrecioPizzaModal').innerText = precioProducto;
+
+        let htmlLista = "";
+        CatalogoExtrasDisponibles.forEach(item => {
+            datosPizzaActiva.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
+            htmlLista += `
+                <div class="item-extra-linea">
+                    <span>${item.nombre} (+${item.precio} Ft) <span id="num-badge-${item.id}" class="badge-numero-verde" style="display:none;">0</span></span>
+                    <button class="btn-mas-nativo" onclick="event.stopPropagation(); incrementarIngredienteExtra('${item.id}')">+</button>
+                </div>
+            `;
+        });
+        document.getElementById('contenedorListaExtrasDinamicos').innerHTML = htmlLista;
+        document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'flex', 'important');
+    }
+
+    function cerrarVentanaExtras() {
+        document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'none', 'important');
+    }
+
+    // Lógica interna para ir sumando extras con el (+) del modal emergente
+    function incrementarIngredienteExtra(idItem) {
+        let ingrediente = datosPizzaActiva.extras[idItem];
+        ingrediente.cantidad += 1;
+        datosPizzaActiva.precioAcumulado += ingrediente.precio;
+        document.getElementById('txtPrecioPizzaModal').innerText = datosPizzaActiva.precioAcumulado;
+
+        const badge = document.getElementById('num-badge-' + idItem);
+        if (badge) {
+            badge.innerText = ingrediente.cantidad;
+            badge.style.display = "inline-block";
+        }
+    }
+</script>
+<script>
+    // CONTROLADOR DE CATEGORÍAS DEL MENÚ LATERAL: CARTAS DE SOLO LECTURA
+document.getElementById('lnk-m-pizzas').addEventListener('click', function(e) { e.preventDefault(); irACategoriaSoloVer('pizzas'); });
+document.getElementById('lnk-m-edito').addEventListener('click', function(e) { e.preventDefault(); irACategoriaSoloVer('edito'); });
+document.getElementById('lnk-m-etelek').addEventListener('click', function(e) { e.preventDefault(); irACategoriaSoloVer('etelek'); });
+document.getElementById('lnk-m-deszertek').addEventListener('click', function(e) { e.preventDefault(); irACategoriaNavegador('deszertek'); }); // Conserva estructura anterior
+
+function irACategoriaSoloVer(categoria) { 
+    modoSoloVer = true; // Encendemos el bloqueo de compra estricto
+    ocultarTodasLasSecciones(); 
+    document.getElementById('s-tienda').style.setProperty('display', 'block', 'important'); 
+    cambiarTab(categoria); 
+    forzarCierreMenu(); 
+    configurarBotonesTienda(); 
+}
+
+// VIGILANTE MODIFICADO: ADAPTA EL SIGNO (+) SEGÚN EL MODO DE LA PÁGINA
+setInterval(function() {
+    document.querySelectorAll('.btn-nyito-extras-basilico, .btn-agregar').forEach(btn => {
+        // Aseguramos que visualmente siempre se mantenga el signo más (+) limpio
+        if (btn.innerText !== "+") {
+            btn.innerText = "+";
+            btn.className = "btn-nyito-extras-basilico";
+        }
+
+        // CASO A: MODO INFORMATIVO (Entró desde el menú lateral)
+        if (modoSoloVer) {
+            btn.onclick = function(e) {
+                if (e) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+                alert('Ez a felület jelenleg csak menükártya! Ha rendelni szeretne, kérjük lépjen vissza a Kezdőlapra és válassza a Delivero vagy Átvétel lehetőséget.');
+            };
+        } 
+        // CASO B: MODO COMPRA ACTIVA (Entró desde Delivero o Átvétel en el inicio)
+        else {
+            if (!btn.hasAttribute('data-modal-extras-enlazado') || btn.onclick.toString().includes('alert')) {
+                btn.setAttribute('data-modal-extras-enlazado', 'true');
+                btn.onclick = function(e) {
+                    if (e) { e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+                    const nombreProducto = this.getAttribute('data-name');
+                    const precioProducto = this.getAttribute('data-price');
+                    inicializarVentanaExtras(nombreProducto, precioProducto); // Abre el modal de extras
+                };
+            }
+        }
+    });
+}, 400);
+
+// ATRAJO INTELIGENTE: REDIRECCIÓN DIRECTA A PRODUCTOS SI YA ESTÁ LOGUEADO
+document.getElementById('lnk-m-carrito-directo').addEventListener('click', function(e) { 
+    e.preventDefault(); 
+    
+    // Verificamos de forma estricta si el usuario tiene una sesión activa en el formulario
+    const estaLogueado = (document.getElementById('inpNev').value.trim() !== "");
+
+    if (estaLogueado) {
+        // ACCIÓN CLAVE: Si ya entró con su contraseña, lo mandamos directo a la tienda de productos activa
+        modoSoloVer = false; // Desactivamos el modo catálogo para que pueda comprar
+        ocultarTodasLasSecciones(); 
+        
+        // Desplegamos la sección de la tienda y cerramos el menú lateral
+        document.getElementById('s-tienda').style.setProperty('display', 'block', 'important'); 
+        forzarCierreMenu(); 
+        
+        // Reconfigura los signos más (+) para que abran las ventanas de extras listas para pedir
+        configurarBotonesTienda(); 
+    } else {
+        // Si no ha iniciado sesión, se mantiene el bloqueo de seguridad y lo redirigimos al acceso
+        alert('Kérjük, először jelentkezzen be a Delivero vagy Átvétel gombbal a rendelés leadásához!');
+        forzarCierreMenu();
+        evaluarFlujoAcceso(); 
+    }
+});
+
+
+</script>
 
 </body>
 </html>
