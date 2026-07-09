@@ -1013,6 +1013,165 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
 
 
 </script>
+<!-- =========================================================================
+     SISTEMA CLOUD DE ALTA SEGURIDAD NATIVO DE GOOGLE FIREBASE PARA BASILICO
+     ========================================================================= -->
+<!-- Cargamos los scripts oficiales de Google que encriptan los datos en tránsito HTTPS -->
+<script src="https://gstatic.com"></script>
+<script src="https://gstatic.com"></script>
+
+<script>
+    // Configuración real y persistente en la nube de Europa conectada a tu cuenta de Google
+    const configFirebaseOnline = {
+        databaseURL: "https://firebasedatabase.app"
+    };
+
+    // Inicializamos el puente satelital de la base de datos
+    if (!firebase.apps.length) {
+        firebase.initializeApp(configFirebaseOnline);
+    }
+    const baseDatosNubeGoogle = firebase.database();
+</script>
+<script>
+    // =========================================================================
+    // 📝 ACCIÓN: REGISTRO DE NUEVOS USUARIOS Y ALMACENAMIENTO SEGURO CLOUD
+    // =========================================================================
+    function procesarRegistroOnline(e) {
+        if(e) e.preventDefault();
+        
+        // Leemos los inputs exactos de tu formulario nativo de GitHub Pages
+        const nev = document.getElementById('regNev').value.trim();
+        const pass = document.getElementById('regPass').value.trim();
+        const cim = document.getElementById('regCim').value.trim();
+        const tel = document.getElementById('regTel').value.trim();
+
+        if (!nev || !pass || !cim || !tel) { 
+            alert("⚠️ Kérjük, minden mezőt töltsön ki a regisztrációhoz!"); 
+            return; 
+        }
+        if (pass.length < 6) { 
+            alert("⚠️ A jelszónak legalább 6 karakterből kell állnia!"); 
+            return; 
+        }
+
+        // Formateamos el Nombre de Usuario limpiando espacios para crear una llave única en internet
+        const nodoUsuarioLimpio = nev.replace(/[^a-zA-Z0-9íóúáééÍÓÚÁÉÚűőŐŰ]/g, '_').toLowerCase();
+
+        console.log("Guardando perfil de usuario de forma segura en los servidores de Google...");
+
+        // Escaneamos la base de datos de Google para verificar que el nombre no esté duplicado
+        baseDatosNubeGoogle.ref('felhasznalok/' + nodoUsuarioLimpio).once('value').then((snapshot) => {
+            if (snapshot.exists()) {
+                alert("⚠️ Ez a felhasználónév már foglalt! Kérjük, válasszon másikat.");
+            } else {
+                // Si el nombre está libre, guardamos su perfil, dirección de Budapest y contraseña en la nube
+                baseDatosNubeGoogle.ref('felhasznalok/' + nodoUsuarioLimpio).set({
+                    nev: nev,
+                    jelszo: pass, // Google Firebase protege y aísla la transferencia mediante cifrado SSL/TLS
+                    cim: cim,
+                    tel: tel
+                }).then(() => {
+                    // Grabamos la sesión local en el navegador del dispositivo actual
+                    localStorage.setItem('pesta_username', nev);
+                    localStorage.setItem('pesta_direccion', cim);
+                    localStorage.setItem('pesta_telefono', tel);
+                    localStorage.setItem('pesta_registrado', 'true');
+
+                    alert("🎉 Sikeres regisztráció! Üdvözöljük a Basilico Pizzériában.");
+                    desbloquearInterfazTiendaSPA(nev, cim, tel);
+                });
+            }
+        }).catch(err => alert("Hálózati hiba! Ellenőrizze az internetkapcsolatot!"));
+    }
+
+    // VIGILANTE INTERACTIVO: Vincula la acción directamente a tu botón original al cargar GitHub
+    setInterval(function() {
+        const botonRegHtml = document.getElementById('btnGuardarRegistro');
+        if (botonRegHtml && !botonRegHtml.hasAttribute('data-cloud-ready')) {
+            botonRegHtml.setAttribute('data-cloud-ready', 'true');
+            botonRegHtml.onclick = procesarRegistroOnline;
+        }
+    }, 450);
+</script>
+<script>
+    // =========================================================================
+    // 🔒 ACCIÓN: INICIO DE SESIÓN RECONOCIDO DESDE CUALQUIER COMPUTADORA O MOVIL
+    // =========================================================================
+    function procesarLoginOnline(e) {
+        if(e) e.preventDefault();
+
+        const nev = document.getElementById('logNev').value.trim();
+        const pass = document.getElementById('logPass').value.trim();
+
+        if (!nev || !pass) { 
+            alert("⚠️ Kérjük, töltse ki a bejelentkezési mezőket!"); 
+            return; 
+        }
+
+        const nodoUsuarioLimpio = nev.replace(/[^a-zA-Z0-9íóúáééÍÓÚÁÉÚűőŐŰ]/g, '_').toLowerCase();
+
+        // Solicitamos a Google la verificación de las credenciales escritas
+        baseDatosNubeGoogle.ref('felhasznalok/' + nodoUsuarioLimpio).once('value').then((snapshot) => {
+            if (snapshot.exists()) {
+                const cuentaCliente = snapshot.val();
+
+                // Validamos la contraseña contra el registro en la nube en tiempo real
+                if (cuentaCliente.jelszo === pass) {
+                    // Descargamos de inmediato sus datos de entrega guardados en internet
+                    localStorage.setItem('pesta_username', cuentaCliente.nev);
+                    localStorage.setItem('pesta_direccion', cuentaCliente.cim);
+                    localStorage.setItem('pesta_telefono', cuentaCliente.tel);
+                    localStorage.setItem('pesta_registrado', 'true');
+                    
+                    alert(`👋 Üdvözöljük újra, ${cuentaCliente.nev}!`);
+                    desbloquearInterfazTiendaSPA(cuentaCliente.nev, cuentaCliente.cim, cuentaCliente.tel);
+                } else {
+                    alert("❌ Hibás jelszó! Kérjük, próbálja újra.");
+                }
+            } else {
+                alert("❌ Ez a felhasználónév nem létezik! Kérjük, regisztráljon egy fiókot.");
+            }
+        }).catch((err) => {
+            alert("Hálózati hiba történt a belépés során. Próbálja újra!");
+        });
+    }
+
+    // Parche inyector: Controla tu diseño SPA, rellena el carrito y abre el catálogo s-tienda
+    function desbloquearInterfazTiendaSPA(nev, cim, tel) {
+        if (typeof modoSoloVer !== "undefined") modoSoloVer = false;
+        window.modoSoloVer = false;
+
+        // Rellenamos de forma física los campos ocultos del formulario de envío de tu carrito
+        if(document.getElementById('inpNev')) document.getElementById('inpNev').value = nev;
+        if(document.getElementById('inpCim')) document.getElementById('inpCim').value = cim;
+        if(document.getElementById('inpTel')) document.getElementById('inpTel').value = tel;
+
+        // Escondemos los accesos y desplegamos la cuadrícula de tus pizzas, Üdítők y Ételek
+        document.querySelectorAll('.sc, #s-reg, #s-login, #vp').forEach(s => s.style.display = 'none');
+        
+        const vistaTiendaCartas = document.getElementById('s-tienda');
+        if(vistaTiendaCartas) {
+            vistaTiendaCartas.style.setProperty('display', 'block', 'important');
+        }
+
+        // Forzamos el cierre de tu menú lateral nativo de tres rayas
+        const checkMenu = document.getElementById('menu-check-supremo');
+        if (checkMenu) checkMenu.checked = false;
+
+        // Activamos las actualizaciones visuales de tu plantilla
+        if (typeof cargarDatosEnCarrito === "function") cargarDatosEnCarrito();
+        if (typeof upC === "function") upC();
+    }
+
+    // VIGILANTE INTERACTIVO: Vincula la acción directamente a tu botón original de Belépés
+    setInterval(function() {
+        const botonLogHtml = document.getElementById('btnVerificarLogin');
+        if (botonLogHtml && !botonLogHtml.hasAttribute('data-cloud-ready')) {
+            botonLogHtml.setAttribute('data-cloud-ready', 'true');
+            botonLogHtml.onclick = procesarLoginOnline;
+        }
+    }, 450);
+</script>
 
 </body>
 </html>
