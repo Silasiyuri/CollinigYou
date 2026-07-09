@@ -57,15 +57,4 @@ document.getElementById('box-pizza-gourmet').addEventListener('click',(e)=>{if(e
 const slider=document.getElementById('carrusel-slider');
 setInterval(()=>{if(slider){slider.style.transition="transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)";slider.style.transform="translateX(-20%)";setTimeout(()=>{slider.style.transition="none";slider.appendChild(slider.firstElementChild);slider.style.transform="translateX(0)";},800);}},3800);
 
-/* >>> BLINDAJE BI-DIRECCIONAL CONTRA ARRASTRE DE RECARGA EN MÓVILES <<< */
-let touchInicioY=0;
-document.body.addEventListener('touchstart',function(e){
-    touchInicioY=e.touches[0].pageY;
-},{passive:true});
-document.body.addEventListener('touchmove',function(e){
-    const elementoScroll=document.querySelector('main');
-    if(!elementoScroll) return;
-    let touchDesplY=e.touches[0].pageY-touchInicioY;
-    // Bloqueo superior (Evita recarga Pull-To-Refresh al deslizar abajo)
-    if(elementoScroll.scrollTop<=0&&touchDesplY>0){e.preventDefault();}
-    
+
