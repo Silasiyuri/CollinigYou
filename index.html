@@ -122,7 +122,6 @@
         .btn-kupon { background: #d6af37 !important; color: #000 !important; border: none !important; padding: 0.6rem 1.2rem !important; font-weight: 700 !important; border-radius: 6px !important; cursor: pointer; }
 
     </style>
-
 </head>
 <body>
     <div id="box-pizza-gourmet" onclick="if(event.target.id!=='close-promo'){document.querySelector('[data-t=\'kosar\']').click();}">
@@ -334,31 +333,13 @@
                 </div>
             </div>
         </div>
-
-        <div id="s-cont" class="sc" style="display:none;">
-  <div class="b-contenido">
-    <h2>KAPCSOLAT</h2>
-    <div class="ci">
-      <!-- Tu línea de correo original -->
-      <p style="text-align:center; font-size:1.1rem; margin-top:1rem;">E-mail: ciao@pestabudapest.hu</p>
-      
-      <!-- NUEVA LÍNEA: Teléfono añadido y centrado -->
-      <p style="text-align:center; font-size:1.1rem; margin-top:0.5rem;">
-        Teléfono: <a href="tel:+3610000000" style="color: inherit; text-decoration: none; font-weight: bold;">+36 1 000 0000</a>
-      </p>
-    </div>
-  </div>
-</div>
-<div id="bm" style="display:none !important;"></div>
-<div id="ml" style="display:none !important;"></div>
-<div id="s-menu" class="sc" style="display:none;"></div>
-<div id="s-filo" class="sc" style="display:none;"></div>
-<div id="s-deliv" class="sc" style="display:none;"></div>
-<div id="s-terkep" class="sc" style="display:none;"></div>
-
-
-
-
+        <div id="s-cont" class="sc" style="display:none;"><div class="b-contenido"><h2>KAPCSOLAT</h2><div class="ci"><p style="text-align:center; font-size:1.1rem; margin-top:1rem;">E-mail: ciao@pestabudapest.hu</p></div></div></div>
+        <div id="bm" style="display:none !important;"></div>
+        <div id="ml" style="display:none !important;"></div>
+        <div id="s-menu" class="sc" style="display:none;"></div>
+        <div id="s-filo" class="sc" style="display:none;"></div>
+        <div id="s-deliv" class="sc" style="display:none;"></div>
+        <div id="s-terkep" class="sc" style="display:none;"></div>
     </main>
 
     <script>
@@ -503,54 +484,63 @@ document.getElementById('btnAplicarKupon').addEventListener('click', function(e)
 
 <!-- CÓDIGO FORZADO PARA CENTRAR EL INICIO AL PULSAR KEZDŐLAP -->
 <script>
-   // CORRECCIÓN INTERNA: FLUJO DE ACCESO INTELIGENTE MULTI-DISPOSITIVO
-function evaluarFlujoAcceso() {
-    modoSoloVer = false; // Desactivamos el modo catálogo para permitir la compra
-    ocultarTodasLasSecciones();
+    setInterval(function() {
+        const botonHome = document.getElementById('lnk-m-home');
+        if (botonHome) {
+            botonHome.onclick = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Ocultamos todas las secciones activas
+                if (typeof ocultarTodasLasSecciones === "function") {
+                    ocultarTodasLasSecciones();
+                } else {
+                    document.querySelectorAll('.sc, #s-tienda, #s-ventana-carrito, #s-reg, #s-login, #s-cont').forEach(s => s.style.display = 'none');
+                }
+                
+                // Forzamos que la sección principal aparezca centrada al 100%
+                const vp = document.getElementById('vp');
+                if (vp) {
+                    vp.style.setProperty('display', 'flex', 'important');
+                    vp.style.setProperty('flex-direction', 'column', 'important');
+                    vp.style.setProperty('align-items', 'center', 'important');
+                    vp.style.setProperty('justify-content', 'center', 'important');
+                    vp.style.setProperty('text-align', 'center', 'important');
+                    vp.style.setProperty('width', '100%', 'important');
+                }
+                
+                // Cerramos el menú lateral
+                if (typeof forzarCierreMenu === "function") {
+                    forzarCierreMenu();
+                } else {
+                    const check = document.getElementById('menu-check-supremo');
+                    if (check) check.checked = false;
+                }
+            };
+        }
+    }, 500);
 
-    // CASO 1: Si el usuario ya se registró y sus datos están guardados en este dispositivo
-    if (localStorage.getItem('pesta_registrado') === 'true') {
-        console.log("Készülék felismerve: Automatikus beléptetés a rendszerbe.");
-        cargarDatosEnCarrito(); // Descarga su nombre, dirección y teléfono
-        mostrarTiendaDeProductos(); // Lo manda directo a pedir pizzas con extras
-        return;
-    }
 
-    // CASO 2: Si es un navegador, teléfono o computadora NUEVA (Doble opción en pantalla)
-    // En lugar de mandarlo directo a registrarse, abrimos un panel de decisión limpio
-    console.log("Új készülék vagy böngésző detektálva. Bejelentkezési opciók megjelenítése.");
-    
-    // Mostramos la sección de LOGIN por defecto para que ponga su contraseña si ya tiene cuenta
-    document.getElementById('s-login').style.setProperty('display', 'block', 'important');
-    
-    // PARCHE VISUAL EN CALIENTE: Añadimos un botón sutil abajo en la pantalla de Login
-    // por si el usuario verdaderamente es nuevo y necesita ir al formulario de Registro
-    const contenedorLogin = document.querySelector('#s-login .form-kosar');
-    if (contenedorLogin && !document.getElementById('lnk-conmutador-registro')) {
-        const txtCambio = document.createElement('p');
-        txtCambio.id = 'lnk-conmutador-registro';
-        txtCambio.innerHTML = `Még nincs fiókja? <span style="color:#d6af37; cursor:pointer; font-weight:700; text-decoration:underline;" onclick="document.getElementById('s-login').style.display='none'; document.getElementById('s-reg').style.setProperty('display','block','important');">Regisztráljon itt &rarr;</span>`;
-        txtCambio.style.setProperty('text-align', 'center', 'important');
-        txtCambio.style.setProperty('margin-top', '15px', 'important');
-        txtCambio.style.setProperty('color', '#aaaaaa', 'important');
-        txtCambio.style.setProperty('font-size', '0.95rem', 'important');
-        contenedorLogin.appendChild(txtCambio);
-    }
-    
-    // De igual forma, añadimos un botón de retorno en la pantalla de Registro por si se equivoca
-    const contenedorReg = document.querySelector('#s-reg .form-kosar');
-    if (contenedorReg && !document.getElementById('lnk-conmutador-login')) {
-        const txtCambioReg = document.createElement('p');
-        txtCambioReg.id = 'lnk-conmutador-login';
-        txtCambioReg.innerHTML = `Már van fiókja? <span style="color:#d6af37; cursor:pointer; font-weight:700; text-decoration:underline;" onclick="document.getElementById('s-reg').style.display='none'; document.getElementById('s-login').style.setProperty('display','block','important');">&larr; Jelentkezzen be itt</span>`;
-        txtCambioReg.style.setProperty('text-align', 'center', 'important');
-        txtCambioReg.style.setProperty('margin-top', '15px', 'important');
-        txtCambioReg.style.setProperty('color', '#aaaaaa', 'important');
-        txtCambioReg.style.setProperty('font-size', '0.95rem', 'important');
-        contenedorReg.appendChild(txtCambioReg);
-    }
-}
 
+// PROTECCIÓN DEL BOTÓN DE CONSULTA DEL CARRITO DESDE EL MENÚ
+document.getElementById('lnk-m-carrito-directo').addEventListener('click', function(e) { 
+    e.preventDefault(); 
+    
+    // Verificamos si el usuario ya ha pasado por el formulario de registro o login con éxito
+    const estaLogueado = (document.getElementById('inpNev').value.trim() !== "");
+
+    if (estaLogueado) {
+        // Si ya está identificado, le permitimos ver la ventana independiente del carrito
+        ocultarTodasLasSecciones(); 
+        document.getElementById('s-ventana-carrito').style.setProperty('display', 'block', 'important'); 
+        forzarCierreMenu(); 
+    } else {
+        // Si no está identificado, bloqueamos el acceso y lo mandamos a loguearse
+        alert('Kérjük, először regisztráljon vagy lépjen be a Delivero / Átvétel gombra kattintva a rendelés megtekintéséhez!');
+        forzarCierreMenu();
+        evaluarFlujoAcceso(); // Ejecuta de forma automática el flujo de Login / Registro
+    }
+});
 
 </script>
 
@@ -631,52 +621,67 @@ function evaluarFlujoAcceso() {
 </div>
 <!-- ESTILOS DE LA VENTANA MODAL PARA INGREDIENTES EXTRAS -->
 <style>
-    /* BOTONES REDONDOS CONFIGURADOS EN PAREJA (- y +) */
-.btn-menos-nativo, .btn-mas-nativo {
-    color: #000000 !important;
-    border: none !important;
-    width: 34px !important;
-    height: 34px !important;
-    border-radius: 50% !important;
-    font-size: 1.2rem !important;
-    font-weight: 700 !important;
-    cursor: pointer !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: transform 0.1s ease, opacity 0.2s !important;
-}
-
-/* El botón de menos es gris oscuro/blanco para diferenciarlo del de más dorado */
-.btn-menos-nativo {
-    background: #ffffff !important;
-    margin-right: 5px !important;
-}
-
-.btn-mas-nativo {
-    background: #d6af37 !important;
-}
-
-/* Efecto cuando el botón de menos está deshabilitado (en 0) */
-.btn-menos-nativo:disabled {
-    background: #333333 !important;
-    color: #666666 !important;
-    cursor: not-allowed !important;
-    opacity: 0.5 !important;
-}
-
-.btn-menos-nativo:active:not(:disabled), .btn-mas-nativo:active {
-    transform: scale(0.9) !important;
-}
-
-.item-extra-linea {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    padding: 12px 0 !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
+    /* Fondo oscuro semitransparente que cubre la pantalla */
+    .pesta-modal-extras {
+        display: none; /* Escondido por defecto */
+        position: fixed !important;
+        top: 0 !important; left: 0 !important;
+        width: 100% !important; height: 100vh !important;
+        background: rgba(0, 0, 0, 0.75) !important;
+        z-index: 999999999 !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    /* Caja blanca/oscura central de la ventana emergente */
+    .modal-extras-contenido {
+        background: #111111 !important;
+        border: 2px solid #d6af37 !important;
+        border-radius: 12px !important;
+        width: 90% !important;
+        max-width: 450px !important;
+        padding: 25px !important;
+        box-sizing: border-box !important;
+        color: #ffffff !important;
+        position: relative !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+    }
+    .modal-extras-titulo { margin: 0 0 15px 0 !important; font-size: 1.4rem !important; color: #d6af37 !important; text-align: center !important; }
+    /* Lista de ingredientes extras con su signo de más */
+    .fila-ingrediente-extra {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 0 !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    /* Botón redondo con signo de más (+) */
+    .btn-signo-mas-extra {
+        background: #d6af37 !important;
+        color: #000000 !important;
+        border: none !important;
+        width: 32px !important; height: 32px !important;
+        border-radius: 50% !important;
+        font-size: 1.2rem !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: transform 0.1s ease !important;
+    }
+    .btn-signo-mas-extra:active { transform: scale(0.9) !important; }
+    
+    /* Contador de extras seleccionados */
+    .contador-extra-badge {
+        background: #2ecc71 !important;
+        color: #ffffff !important;
+        padding: 2px 8px !important;
+        border-radius: 10px !important;
+        font-size: 0.8rem !important;
+        font-weight: 700 !important;
+        margin-left: 8px !important;
+        display: none;
+    }
 </style>
 <style>
     .pesta-modal-extras-independiente {
@@ -889,7 +894,6 @@ function evaluarFlujoAcceso() {
         { id: "gomba", nombre: "Gomba", precio: 300 },
         { id: "sonka", nombre: "Sonka", precio: 450 },
         { id: "kukorica", nombre: "Kukorica", precio: 250 }
-        
     ];
 
     // Limpia y carga los datos del modal cada vez que se pulsa un producto
@@ -1006,169 +1010,7 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
         evaluarFlujoAcceso(); 
     }
 });
-    // Función que carga los datos limpios en la ventana flotante cada vez que se pulsa un producto
-    function inicializarVentanaExtras(nombreProducto, precioProducto) {
-        datosPizzaActiva.nombre = nombreProducto;
-        datosPizzaActiva.precioBase = parseInt(precioProducto);
-        datosPizzaActiva.precioAcumulado = parseInt(precioProducto);
-        datosPizzaActiva.extras = {};
 
-        document.getElementById('txtNombrePizzaModal').innerText = nombreProducto;
-        document.getElementById('txtPrecioPizzaModal').innerText = precioProducto;
-
-        let htmlLista = "";
-        CatalogoExtrasDisponibles.forEach(item => {
-            datosPizzaActiva.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
-            
-            // Inyectamos la pareja de botones: el botón de menos (-) inicia deshabilitado (disabled)
-            htmlLista += `
-                <div class="item-extra-linea">
-                    <span>${item.nombre} (+${item.precio} Ft) <span id="num-badge-${item.id}" class="badge-numero-verde" style="display:none;">0</span></span>
-                    <div style="display: flex !important; align-items: center !important;">
-                        <button class="btn-menos-nativo" id="btn-restar-${item.id}" onclick="event.stopPropagation(); decrementarIngredienteExtra('${item.id}')" disabled>-</button>
-                        <button class="btn-mas-nativo" onclick="event.stopPropagation(); incrementarIngredienteExtra('${item.id}')">+</button>
-                    </div>
-                </div>
-            `;
-        });
-        document.getElementById('contenedorListaExtrasDinamicos').innerHTML = htmlLista;
-        document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'flex', 'important');
-    }
-    // Función interactiva para el botón de más (+)
-    function incrementarIngredienteExtra(idItem) {
-        let ingrediente = datosPizzaActiva.extras[idItem];
-        ingrediente.cantidad += 1;
-        datosPizzaActiva.precioAcumulado += ingrediente.precio;
-        document.getElementById('txtPrecioPizzaModal').innerText = datosPizzaActiva.precioAcumulado;
-
-        // Activamos el botón de menos correspondiente ya que la cantidad es mayor a 0
-        document.getElementById('btn-restar-' + idItem).disabled = false;
-
-        const badge = document.getElementById('num-badge-' + idItem);
-        if (badge) {
-            badge.innerText = ingrediente.cantidad;
-            badge.style.display = "inline-block";
-        }
-    }
-
-    // NUEVA FUNCIÓN INTERACTIVA PARA EL BOTÓN DE MENOS (-)
-    function decrementarIngredienteExtra(idItem) {
-        let ingrediente = datosPizzaActiva.extras[idItem];
-        
-        // Solo restamos si el cliente tiene al menos 1 unidad de ese extra seleccionada
-        if (ingrediente.cantidad > 0) {
-            ingrediente.cantidad -= 1;
-            datosPizzaActiva.precioAcumulado -= ingrediente.precio;
-            document.getElementById('txtPrecioPizzaModal').innerText = datosPizzaActiva.precioAcumulado;
-
-            const badge = document.getElementById('num-badge-' + idItem);
-            
-            // Si regresa a cero, ocultamos el número verde y deshabilitamos el botón de menos
-            if (ingrediente.cantidad === 0) {
-                if (badge) badge.style.display = "none";
-                document.getElementById('btn-restar-' + idItem).disabled = true;
-            } else {
-                if (badge) badge.innerText = ingrediente.cantidad;
-            }
-        }
-    }
-
-// ESTRUCTURA MAESTRA DE EXTRAS INDIVIDUALES POR CATEGORÍA
-const DiccionarioExtrasPorProducto = {
-    // 🍕 Extras exclusivos para cualquier tipo de Pizza
-    pizzas: [
-        { id: "sajt", nombre: "Extra Sajt", precio: 400 },
-        { id: "gomba", nombre: "Gomba", precio: 300 },
-        { id: "sonka", nombre: "Sonka", precio: 450 },
-        { id: "kukorica", nombre: "Kukorica", precio: 250 },
-        { id: "szalami", nombre: "Szalámi", precio: 400 },
-        { id: "bacon", nombre: "Bacon", precio: 450 },
-        { id: "hagyma", nombre: "Lila hagyma", precio: 200 },
-        { id: "oliva", nombre: "Olívabogyó", precio: 300 }
-    ],
-    // 🥤 Extras exclusivos para las Bebidas (Üdítők)
-    bebidas: [
-        { id: "jeget", nombre: "Jég", precio: 0 },
-        { id: "citrom", nombre: "Citromkarika", precio: 150 },
-        { id: "lime", nombre: "Lime szelet", precio: 200 }
-    ],
-    // 🍝 Extras exclusivos para la Comida (Ételek)
-    etelek: [
-        { id: "parmezan", nombre: "Extra Parmezán", precio: 350 },
-        { id: "kenyer", nombre: "Házi kenyér kosár", precio: 400 },
-        { id: "Chili", nombre: "Csípős szósz", precio: 250 }
-    ],
-    // 🍰 Extras para los Postres (Deszertek)
-    deszertek: [
-        { id: "tejszin", nombre: "Tejszínhab", precio: 250 },
-        { id: "csoki", nombre: "Csoki öntet", precio: 200 },
-        { id: "eper", nombre: "Eper öntet", precio: 200 }
-    ]
-};
-function inicializarVentanaExtras(nombreProducto, precioProducto) {
-    // 1. Reseteamos los datos de control del producto activo
-    datosPizzaActiva.nombre = nombreProducto;
-    datosPizzaActiva.precioBase = parseInt(precioProducto);
-    datosPizzaActiva.precioAcumulado = parseInt(precioProducto);
-    datosPizzaActiva.extras = {};
-
-    document.getElementById('txtNombrePizzaModal').innerText = nombreProducto;
-    document.getElementById('txtPrecioPizzaModal').innerText = precioProducto;
-
-    // 2. DETECTOR DINÁMICO: Clasifica el producto para extraer su lista de extras individual
-    let listaExtrasSeleccionada = DiccionarioExtrasPorProducto.pizzas; // Por defecto pizzas
-    const nombreMinuscula = nombreProducto.toLowerCase();
-
-    if (nombreMinuscula.includes('cola') || nombreMinuscula.includes('fanta') || nombreMinuscula.includes('kinley') || nombreMinuscula.includes('0.5l')) {
-        listaExtrasSeleccionada = DiccionarioExtrasPorProducto.bebidas;
-    } else if (nombreMinuscula.includes('lasagne') || nombreMinuscula.includes('carbonara') || nombreMinuscula.includes('arrabiata')) {
-        listaExtrasSeleccionada = DiccionarioExtrasPorProducto.etelek;
-    } else if (nombreMinuscula.includes('tiramisu') || nombreMinuscula.includes('cotta') || nombreMinuscula.includes('profiterol')) {
-        listaExtrasSeleccionada = DiccionarioExtrasPorProducto.deszertek;
-    }
-
-    // 3. Construimos el HTML limpio con su par de botones (+ / -) personalizado
-    let htmlLista = "";
-    listaExtrasSeleccionada.forEach(item => {
-        datosPizzaActiva.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
-        
-        htmlLista += `
-            <div class="item-extra-linea" style="display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 12px 0 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;">
-                <span>${item.nombre} (+${item.precio} Ft) <span id="num-badge-${item.id}" class="badge-numero-verde" style="display:none;">0</span></span>
-                <div style="display: flex !important; align-items: center !important;">
-                    <button class="btn-menos-nativo" id="btn-restar-${item.id}" onclick="event.stopPropagation(); decrementarIngredienteExtra('${item.id}')" disabled>-</button>
-                    <button class="btn-mas-nativo" onclick="event.stopPropagation(); incrementarIngredienteExtra('${item.id}')">+</button>
-                </div>
-            </div>
-        `;
-    });
-
-    document.getElementById('contenedorListaExtrasDinamicos').innerHTML = htmlLista;
-    document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'flex', 'important');
-}
-setInterval(function() {
-    if (typeof modoSoloVer !== "undefined" && !modoSoloVer) {
-        document.querySelectorAll('#cat-pizzas .btn-agregar, #cat-edito .btn-agregar, #cat-etelek .btn-agregar, #cat-deszertek .btn-agregar').forEach(btn => {
-            if (!btn.hasAttribute('data-modal-final-listo')) {
-                btn.setAttribute('data-modal-final-listo', 'true');
-                
-                btn.onclick = function(e) {
-                    if (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        e.stopImmediatePropagation();
-                    }
-                    const name = this.getAttribute('data-name');
-                    const price = this.getAttribute('data-price');
-                    
-                    if (typeof inicializarVentanaExtras === "function" && name) {
-                        inicializarVentanaExtras(name, price);
-                    }
-                };
-            }
-        });
-    }
-}, 400);
 
 </script>
 
