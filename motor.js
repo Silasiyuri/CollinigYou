@@ -68,6 +68,4 @@ document.body.addEventListener('touchmove',function(e){
     let touchDesplY=e.touches[0].pageY-touchInicioY;
     // Bloqueo superior (Evita recarga Pull-To-Refresh al deslizar abajo)
     if(elementoScroll.scrollTop<=0&&touchDesplY>0){e.preventDefault();}
-    // Bloqueo inferior (Evita desborde elástico al deslizar arriba)
-    if(elementoScroll.scrollTop+elementoScroll.clientHeight>=elementoScroll.scrollHeight&&touchDesplY<0){e.preventDefault();}
-},{passive:false});
+    
