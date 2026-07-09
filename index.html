@@ -120,66 +120,6 @@
         .bloque-kupon { display: flex !important; gap: 8px !important; margin-bottom: 1rem !important; }
         .bloque-kupon input { flex-grow: 1 !important; padding: 0.6rem !important; background: rgba(255,255,255,0.05) !important; border: 1px solid rgba(255,255,255,0.1) !important; color: #fff !important; border-radius: 6px !important; }
         .btn-kupon { background: #d6af37 !important; color: #000 !important; border: none !important; padding: 0.6rem 1.2rem !important; font-weight: 700 !important; border-radius: 6px !important; cursor: pointer; }
-/* =======================================================
-   REPARACIÓN SUPREMA: ELIMINA RECUADRO BLANCO Y BAJA LAS PIZZAS
-   ======================================================= */
-
-/* 1. Destruye el fondo blanco y rompe la fila horizontal de la caja madre */
-#s-tienda .b-contenido {
-    display: flex !important;
-    flex-direction: column !important; /* Fuerza de forma estricta que el catálogo baje */
-    background: transparent !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
-    width: 100% !important;
-    max-width: 1200px !important;
-    margin: 0 auto !important;
-    box-sizing: border-box !important;
-}
-
-/* 2. Rejilla fluida para el catálogo: Forza que aparezca ABAJO en filas y columnas perfectas */
-#s-tienda .tab-content.active {
-    display: grid !important;
-    /* Crea columnas automáticas de mínimo 280px. Si no caben en horizontal, saltan abajo */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
-    gap: 20px !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 20px 10px !important;
-    margin-top: 20px !important; /* Separa limpiamente las pizzas de las pestañas */
-}
-
-/* 3. Asegura que tus tarjetas originales mantengan su estructura sin deformarse */
-#s-tienda .producto-card {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-    background: rgba(255, 255, 255, 0.03) !important; /* Fondo oscuro elegante integrado con la web */
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 12px !important;
-    box-sizing: border-box !important;
-    margin: 0 !important;
-}
-
-/* 4. Forza que el precio y el botón se queden fijos alineados abajo */
-#s-tienda .producto-meta {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    margin-top: auto !important; /* Empuja el precio al fondo si la descripción es corta */
-    width: 100% !important;
-}
-
-/* 5. Mantiene las pestañas de categorías arriba de forma limpia y transparente */
-#s-tienda .tabs-productos {
-    display: flex !important;
-    flex-direction: row !important;
-    width: 100% !important;
-    gap: 10px !important;
-    overflow-x: auto !important;
-    background: transparent !important;
-}
 
     </style>
 </head>
@@ -264,8 +204,7 @@
         
         <!-- VISTA 3: NUEVA VENTANA DE LOGIN AGREGADA (VISITAS POSTERIORES) -->
         <div id="s-login" class="sc" style="display:none;"><div class="b-contenido"><h2>VISSZATÉRŐ VÁSÁRLÓ BELÉPÉS</h2><div class="form-kosar"><label>Felhasználónév (Név):</label><input type="text" id="logNev" placeholder="Kovács János"><label>Jelszó:</label><input type="password" id="logPass" placeholder="••••••••"><button id="btnVerificarLogin" style="width:100%;padding:0.9rem;margin-top:1.5rem;background:#d6af37;color:#000;font-weight:700;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;">Belépés a vásárláshoz</button></div></div></div>
-
-        <!-- VISTA 4: VISTA DE PRODUCTOS A PANTALLA COMPLETA -->
+<!-- VISTA 4: VISTA DE PRODUCTOS A PANTALLA COMPLETA -->
         <div id="s-tienda" class="sc" style="display:none;">
             <div class="b-contenido" style="max-width:1200px; width:100%;">
                 <div class="tabs-productos">
@@ -274,168 +213,84 @@
                     <button class="tab-btn" id="tab-etelek" onclick="cambiarTab('etelek')">🍝 Ételek</button>
                     <button class="tab-btn" id="tab-deszertek" onclick="cambiarTab('deszertek')">🍰 Deszertek</button>
                 </div>
-               <div id="cat-pizzas" class="tab-content active">
+                
+                <!-- CATEGORÍA: PIZZÁK -->
+                <div id="cat-pizzas" class="tab-content active">
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>I. Pesta Gourmet</h3>
+                        <p>Paradicsomszósz, bivalymozzarella, bazsalikom krém.</p>
+                        <div class="producto-meta"><span class="producto-precio">3400 Ft</span><button class="btn-agregar" data-name="I. Pesta Gourmet" data-price="3400">Kosárba</button></div>
+                    </div></div>
 
-    <!-- Pizza 1 --> <div id="cat-etelek" class="tab-content">
-                    <div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>II. Margherita</h3>
+                        <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
+                        <div class="producto-meta"><span class="producto-precio">2800 Ft</span><button class="btn-agregar" data-name="II. Margherita" data-price="2800">Kosárba</button></div>
+                    </div></div>
 
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>III. Prosciutto</h3>
+                        <p>Paradicsomszósz, mozzarella, prémium főtt sonka.</p>
+                        <div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="III. Prosciutto" data-price="3200">Kosárba</button></div>
+                    </div></div>
+
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>IV. Diavola</h3>
+                        <p>Paradicsomszósz, mozzarella, csípős szalámi, lila hagyma.</p>
+                        <div class="producto-meta"><span class="producto-precio">3600 Ft</span><button class="btn-agregar" data-name="IV. Diavola" data-price="3600">Kosárba</button></div>
+                    </div></div>
                 </div>
-        </div>
-    </div>
 
-    <!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ⚠️ AQUÍ PUEDES SEGUIR PEGANDO MÁS DE 100 PIZZAS USANDO ESTE MISMO FORMATO EXACTO -->
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-<!-- Pizza 2 -->
-    <div class="producto-card">
-        <div class="producto-info">
-            <h3>II. Margherita</h3>
-            <p>Paradicsomszósz, mozzarella, oregano, olívaolaj.</p>
-            <div class="producto-meta">
-                <span class="producto-precio">2800 Ft</span>
-                <button class="btn-agregar" data-name="II. Margherita" data-price="2800">+</button>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-</div></div>
-
-
-
-                </div>
+                <!-- CATEGORÍA: ÜDÍTŐK -->
                 <div id="cat-edito" class="tab-content">
-                    <div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div><div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div><div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div><div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div><div class="producto-card"><div class="producto-info"><h3>Coca-Cola 0.5L</h3><p>Hűsítő üdítőital.</p><div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div></div></div>
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Coca-Cola 0.5L</h3>
+                        <p>Hűsítő üdítőital.</p>
+                        <div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola 0.5L" data-price="650">Kosárba</button></div>
+                    </div></div>
+
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Coca-Cola Zero 0.5L</h3>
+                        <p>Hűsítő üdítőital cukormentesen.</p>
+                        <div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Coca-Cola Zero 0.5L" data-price="650">Kosárba</button></div>
+                    </div></div>
+
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Fanta Narancs 0.5L</h3>
+                        <p>Gyümölcsös narancs ízű üdítőital.</p>
+                        <div class="producto-meta"><span class="producto-precio">650 Ft</span><button class="btn-agregar" data-name="Fanta Narancs 0.5L" data-price="650">Kosárba</button></div>
+                    </div></div>
                 </div>
+
+                <!-- CATEGORÍA: ÉTELEK -->
                 <div id="cat-etelek" class="tab-content">
-                    <div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
-<div class="producto-card"><div class="producto-info"><h3>Lasagne</h3><p>Kemencében sült tészta hússal.</p><div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div></div></div>
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Lasagne</h3>
+                        <p>Kemencében sült tészta hússal.</p>
+                        <div class="producto-meta"><span class="producto-precio">3200 Ft</span><button class="btn-agregar" data-name="Lasagne" data-price="3200">Kosárba</button></div>
+                    </div></div>
 
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Spaghetti Carbonara</h3>
+                        <p>Tejszínes tészta ropogós baconnel és sajttal.</p>
+                        <div class="producto-meta"><span class="producto-precio">2900 Ft</span><button class="btn-agregar" data-name="Spaghetti Carbonara" data-price="2900">Kosárba</button></div>
+                    </div></div>
                 </div>
+
+                <!-- CATEGORÍA: DESZERTEK -->
                 <div id="cat-deszertek" class="tab-content">
-                    <div class="producto-card"><div class="producto-info"><h3>Tiramisu</h3><p>Eredeti olasz házi recept.</p><div class="producto-meta"><span class="producto-precio">1450 Ft</span><button class="btn-agregar" data-name="Tiramisu" data-price="1450">Kosárba</button></div></div></div>
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Tiramisu</h3>
+                        <p>Eredeti olasz házi recept.</p>
+                        <div class="producto-meta"><span class="producto-precio">1450 Ft</span><button class="btn-agregar" data-name="Tiramisu" data-price="1450">Kosárba</button></div>
+                    </div></div>
+
+                    <div class="producto-card"><div class="producto-info">
+                        <h3>Panna Cotta</h3>
+                        <p>Tejszínes desszert erdei gyümölcs öntettel.</p>
+                        <div class="producto-meta"><span class="producto-precio">1350 Ft</span><button class="btn-agregar" data-name="Panna Cotta" data-price="1350">Kosárba</button></div>
+                    </div></div>
                 </div>
-
-
             </div>
             <button class="btn-flotante-kosar" id="btnIrAlCarrito">🛒 Tovább a kosárhoz (0)</button>
         </div>
@@ -448,17 +303,12 @@
                     <h2 style="text-align:center; margin-top:0;">🛒 RENDELÉSI KOSÁR</h2>
                     <div id="itCar" style="margin: 1.5rem 0; color:#aaa; font-size:1rem;">A kosár üres.</div>
                     
-<!-- MÓDULO DE CUPÓN REPARADO CON TEXTO VISIBLE Y BOTÓN DE ACTIVACIÓN -->
-<label style="display:block !important; margin-top:12px !important; font-size:15px !important; font-weight:700 !important; color:#ffffff !important; text-align:left !important;">Kuponkód:</label>
-<div class="bloque-kupon" style="display: flex !important; gap: 8px !important; margin-bottom: 15px !important; width: 100% !important; box-sizing: border-box !important;">
-    <!-- Entrada de texto con color amarillo de alto contraste forzado -->
-    <input type="text" id="inpKupon" placeholder="" autocomplete="off" 
-           style="flex-grow: 1 !important; height: 45px !important; line-height: 45px !important; padding: 0px 12px !important; background-color: #000000 !important; border: 2px solid #ffffff !important; color: #d6af37 !important; -webkit-text-fill-color: #d6af37 !important; font-size: 16px !important; font-family: sans-serif !important; font-weight: 700 !important; border-radius: 6px !important; text-transform: uppercase !important; box-sizing: border-box !important; display: block !important;">
-    
-    <!-- El botón físico para activar el descuento -->
-    <button class="btn-kupon" id="btnAplicarKupon" style="height: 45px !important; background: #d6af37 !important; color: #000000 !important; border: none !important; padding: 0px 18px !important; font-weight: 700 !important; font-size: 14px !important; border-radius: 6px !important; cursor: pointer !important; text-transform: uppercase !important; box-sizing: border-box !important;">Aktivál</button>
-</div>
-
+                    <label style="display:block !important; margin-top:12px !important; font-size:15px !important; font-weight:700 !important; color:#ffffff !important; text-align:left !important;">Kuponkód:</label>
+                    <div class="bloque-kupon" style="display: flex !important; gap: 8px !important; margin-bottom: 15px !important; width: 100% !important; box-sizing: border-box !important;">
+                        <input type="text" id="inpKupon" placeholder="" autocomplete="off" 
+                               style="flex-grow: 1 !important; height: 45px !important; line-height: 45px !important; padding: 0px 12px !important; background-color: #000000 !important; border: 2px solid #ffffff !important; color: #d6af37 !important; -webkit-text-fill-color: #d6af37 !important; font-size: 16px !important; font-family: sans-serif !important; font-weight: 700 !important; border-radius: 6px !important; text-transform: uppercase !important; box-sizing: border-box !important; display: block !important;">
+                        <button class="btn-kupon" id="btnAplicarKupon" style="height: 45px !important; background: #d6af37 !important; color: #000000 !important; border: none !important; padding: 0px 18px !important; font-weight: 700 !important; font-size: 14px !important; border-radius: 6px !important; cursor: pointer !important; text-transform: uppercase !important; box-sizing: border-box !important;">Aktivál</button>
+                    </div>
 
                     <h3 style="border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem;">Összesen: <span id="tp">0</span> Ft</h3>
                     <div class="form-kosar" style="margin-top:1.5rem;"><label>Teljes név:</label><input type="text" id="inpNev" readonly><label>Szállítási cím:</label><input type="text" id="inpCim" readonly><label>Telefonszám:</label><input type="tel" id="inpTel" readonly></div>
@@ -467,7 +317,6 @@
             </div>
         </div>
         <div id="s-cont" class="sc" style="display:none;"><div class="b-contenido"><h2>KAPCSOLAT</h2><div class="ci"><p style="text-align:center; font-size:1.1rem; margin-top:1rem;">E-mail: ciao@pestabudapest.hu</p></div></div></div>
-        <!-- Divs falsos ocultos para evitar errores en motor.js -->
         <div id="bm" style="display:none !important;"></div>
         <div id="ml" style="display:none !important;"></div>
         <div id="s-menu" class="sc" style="display:none;"></div>
