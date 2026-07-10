@@ -884,36 +884,91 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
     </div>
 </div>
 <script>
-    let datosPizzaActiva = { nombre: "", precioBase: 0, precioAcumulado: 0, extras: {} };
+    // NUEVAS VARIABLES TOTALMENTE LIMPIAS DE CACHÉ
+    let GLOBAL_CARRITO_LIBRE = []; 
+    let OBJETO_PRODUCTO_ACTIVO = { nombre: "", precioBase: 0, precioAcumulado: 0, extras: {} };
 
-    // Listado maestro de ingredientes adicionales con sus precios en Florines (Ft)
-    const CatalogoExtrasDisponibles = [
-        { id: "sajt", nombre: "Extra Sajt", precio: 400 },
-        { id: "gomba", nombre: "Gomba", precio: 300 },
-        { id: "sonka", nombre: "Sonka", precio: 450 },
-        { id: "kukorica", nombre: "Kukorica", precio: 250 }
-    ];
+    // DICCIONARIO DIRECTO: Añade aquí los extras que quieras y cambia sus nombres libremente
+    const NUEVO_CATALOGO_EXTRAS = {
+        pizzas: [
+            { id: "sajt", nombre: "Extra Sajt", precio: 400 },
+            { id: "gomba", nombre: "Gomba", precio: 300 },
+            { id: "sonka", nombre: "Sonka", precio: 450 },
+            { id: "kukorica", nombre: "Kukorica", precio: 250 },
+            { id: "szalami", nombre: "Szalámi", precio: 400 },
+            { id: "bacon", nombre: "Bacon", precio: 450 }
+        ],
+        bebidas: [
+            { id: "jeg", nombre: "Jég", precio: 0 },
+            { id: "citrom", nombre: "Citromkarika", precio: 150 },
+            { id: "lime", nombre: "Lime szelet", precio: 200 }
+        ]
+    };
 
-    // Limpia y carga los datos del modal cada vez que se pulsa un producto
+    // ELIMINACIÓN DE LOS CANDADOS DE NAVEGACIÓN (SE EJECUTA AUTOMÁTICAMENTE)
+    function evaluarFlujoAcceso() {
+        console.log("Acceso concedido automáticamente. Sin bloqueos.");
+        
+        // Fuerza el apagado de cualquier pantalla de login vieja
+        const loginSec = document.getElementById('s-login');
+        if (loginSec) loginSec.style.setProperty('display', 'none', 'important');
+
+        // Muestra la tienda directamente
+        if (typeof cargarDatosEnCarrito === "function") cargarDatosEnCarrito(); 
+        if (typeof mostrarTiendaDeProductos === "function") mostrarTiendaDeProductos();
+    }
+
+    // INTERCEPTOR DIRECTO DEL CARRITO: Abre la sección sin preguntar por usuarios
+    const btnCarritoDirectoNew = document.getElementById('lnk-m-carrito-directo');
+    if (btnCarritoDirectoNew) {
+        btnCarritoDirectoNew.replaceWith(btnCarritoDirectoNew.cloneNode(true)); // Elimina eventos viejos bloqueantes
+        document.getElementById('lnk-m-carrito-directo').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (typeof ocultarTodasLasSecciones === "function") ocultarTodasLasSecciones();
+            else {
+                document.querySelectorAll('.sc').forEach(s => s.style.display = 'none');
+                if (document.getElementById('vp')) document.getElementById('vp').style.display = 'none';
+            }
+            const secCarrito = document.getElementById('s-ventana-carrito');
+            if (secCarrito) secCarrito.style.setProperty('display', 'block', 'important');
+            if (typeof forzarCierreMenu === "function") forzarCierreMenu();
+        });
+    }
+
+    // INICIALIZADOR INDEPENDIENTE DEL MODAL
     function inicializarVentanaExtras(nombreProducto, precioProducto) {
-        datosPizzaActiva.nombre = nombreProducto;
-        datosPizzaActiva.precioBase = parseInt(precioProducto);
-        datosPizzaActiva.precioAcumulado = parseInt(precioProducto);
-        datosPizzaActiva.extras = {};
+        OBJETO_PRODUCTO_ACTIVO.nombre = nombreProducto;
+        OBJETO_PRODUCTO_ACTIVO.precioBase = parseInt(precioProducto);
+        OBJETO_PRODUCTO_ACTIVO.precioAcumulado = parseInt(precioProducto);
+        OBJETO_PRODUCTO_ACTIVO.extras = {}; 
 
         document.getElementById('txtNombrePizzaModal').innerText = nombreProducto;
-        document.getElementById('txtPrecioPizzaModal').innerText = precioProducto;
+        document.getElementById('txtPrecioPizzaModal').innerText = precioProducto + " Ft";
+
+        let listaSeleccionada = NUEVO_CATALOGO_EXTRAS.pizzas;
+        const nombreMinuscula = nombreProducto.toLowerCase();
+        if (nombreMinuscula.includes('cola') || nombreMinuscula.includes('fanta') || nombreMinuscula.includes('0.5l')) {
+            listaSeleccionada = NUEVO_CATALOGO_EXTRAS.bebidas;
+        }
 
         let htmlLista = "";
-        CatalogoExtrasDisponibles.forEach(item => {
-            datosPizzaActiva.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
+        listaSeleccionada.forEach(item => {
+            // Crea el contenedor de datos aislado para este producto en específico
+            OBJETO_PRODUCTO_ACTIVO.extras[item.id] = { nombre: item.nombre, precio: item.precio, cantidad: 0 };
+            
             htmlLista += `
-                <div class="item-extra-linea">
-                    <span>${item.nombre} (+${item.precio} Ft) <span id="num-badge-${item.id}" class="badge-numero-verde" style="display:none;">0</span></span>
-                    <button class="btn-mas-nativo" onclick="event.stopPropagation(); incrementarIngredienteExtra('${item.id}')">+</button>
+                <div class="item-extra-linea" style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+                    <span>${item.nombre} (+${item.precio} Ft) 
+                        <span id="badge-nuevo-${item.id}" style="display:none; background:#2ecc71; color:white; padding:2px 6px; border-radius:10px; font-size:0.8rem; margin-left:5px;">0</span>
+                    </span>
+                    <div>
+                        <button id="btn-restar-nuevo-${item.id}" onclick="event.stopPropagation(); restarExtraNuevo('${item.id}')" disabled style="width:30px; height:30px;">-</button>
+                        <button onclick="event.stopPropagation(); sumarExtraNuevo('${item.id}')" style="width:30px; height:30px;">+</button>
+                    </div>
                 </div>
             `;
         });
+        
         document.getElementById('contenedorListaExtrasDinamicos').innerHTML = htmlLista;
         document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'flex', 'important');
     }
@@ -921,21 +976,88 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
     function cerrarVentanaExtras() {
         document.getElementById('pestaModalExtrasIndependiente').style.setProperty('display', 'none', 'important');
     }
-
-    // Lógica interna para ir sumando extras con el (+) del modal emergente
-    function incrementarIngredienteExtra(idItem) {
-        let ingrediente = datosPizzaActiva.extras[idItem];
-        ingrediente.cantidad += 1;
-        datosPizzaActiva.precioAcumulado += ingrediente.precio;
-        document.getElementById('txtPrecioPizzaModal').innerText = datosPizzaActiva.precioAcumulado;
-
-        const badge = document.getElementById('num-badge-' + idItem);
-        if (badge) {
-            badge.innerText = ingrediente.cantidad;
-            badge.style.display = "inline-block";
+</script>
+<script>
+    // CONTROL MATEMÁTICO INDEPENDIENTE
+    function sumarExtraNuevo(idItem) {
+        let ingrediente = OBJETO_PRODUCTO_ACTIVO.extras[idItem];
+        if (ingrediente) {
+            ingrediente.cantidad += 1;
+            renderizarCambiosModal(idItem);
         }
     }
+
+    function restarExtraNuevo(idItem) {
+        let ingrediente = OBJETO_PRODUCTO_ACTIVO.extras[idItem];
+        if (ingrediente && ingrediente.cantidad > 0) {
+            ingrediente.cantidad -= 1;
+            renderizarCambiosModal(idItem);
+        }
+    }
+
+    function renderizarCambiosModal(idItem) {
+        const ingrediente = OBJETO_PRODUCTO_ACTIVO.extras[idItem];
+        const badge = document.getElementById('badge-nuevo-' + idItem);
+        const btnRestar = document.getElementById('btn-restar-nuevo-' + idItem);
+
+        if (badge) {
+            badge.innerText = ingrediente.cantidad;
+            badge.style.display = ingrediente.cantidad > 0 ? "inline-block" : "none";
+        }
+        if (btnRestar) {
+            btnRestar.disabled = ingrediente.cantidad === 0;
+        }
+
+        // Calcula la suma total únicamente para este producto en pantalla
+        let calculoTotal = OBJETO_PRODUCTO_ACTIVO.precioBase;
+        Object.keys(OBJETO_PRODUCTO_ACTIVO.extras).forEach(key => {
+            calculoTotal += (OBJETO_PRODUCTO_ACTIVO.extras[key].precio * OBJETO_PRODUCTO_ACTIVO.extras[key].cantidad);
+        });
+        
+        OBJETO_PRODUCTO_ACTIVO.precioAcumulado = calculoTotal;
+        document.getElementById('txtPrecioPizzaModal').innerText = calculoTotal + " Ft";
+    }
+
+    // ACCIÓN DE CIERRE Y ENTRADA AL CARRITO GENERAL
+    function confirmarYAgregarAlCarrito() {
+        let extrasConfirmados = {};
+        
+        // Aísla los extras cuya cantidad sea mayor que cero
+        Object.keys(OBJETO_PRODUCTO_ACTIVO.extras).forEach(key => {
+            const itemExtra = OBJETO_PRODUCTO_ACTIVO.extras[key];
+            if (itemExtra.cantidad > 0) {
+                extrasConfirmados[key] = {
+                    nombre: itemExtra.nombre,
+                    precio: itemExtra.precio,
+                    cantidad: itemExtra.cantidad
+                };
+            }
+        });
+
+        // Crea el paquete final congelando sus características individuales
+        const itemParaCarrito = {
+            codigoUnicoInterno: "item_" + Date.now() + "_" + Math.floor(Math.random() * 1000),
+            nombre: OBJETO_PRODUCTO_ACTIVO.nombre,
+            precioOriginal: OBJETO_PRODUCTO_ACTIVO.precioBase,
+            precioFinalConExtras: OBJETO_PRODUCTO_ACTIVO.precioAcumulado,
+            extrasAislados: extrasConfirmados
+        };
+
+        // Lo guarda en la nueva lista libre
+        GLOBAL_CARRITO_LIBRE.push(itemParaCarrito);
+        
+        // Sincroniza con tu variable clásica 'car' para no romper otras partes de tu app vieja
+        if (typeof car !== "undefined") {
+            car.push(itemParaCarrito);
+        }
+
+        console.log("Guardado con total independencia:", GLOBAL_CARRITO_LIBRE);
+        cerrarVentanaExtras();
+        
+        if (typeof renderizarCarritoInterfaz === "function") renderizarCarritoInterfaz();
+    }
 </script>
+
 <script>
     // CONTROLADOR DE CATEGORÍAS DEL MENÚ LATERAL: CARTAS DE SOLO LECTURA
 document.getElementById('lnk-m-pizzas').addEventListener('click', function(e) { e.preventDefault(); irACategoriaSoloVer('pizzas'); });
