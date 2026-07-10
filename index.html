@@ -1012,13 +1012,13 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
 
 </script>
 <script>
+   <script>
     // =========================================================================
     // 📝 SECCIÓN A: REGISTRO DE USUARIOS EN LA NUBE (ID NATIVO: btnGuardarRegistro)
     // =========================================================================
-    function procesarRegistroCloudSatelital(e) {
+    function procesarRegistroCloudNativo(e) {
         if(e) e.preventDefault();
         
-        // Leemos las cajas de texto exactas de tu formulario original de GitHub Pages
         const nev = document.getElementById('regNev').value.trim();
         const pass = document.getElementById('regPass').value.trim();
         const cim = document.getElementById('regCim').value.trim();
@@ -1033,7 +1033,7 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
             return; 
         }
 
-        // Formateamos el Nombre de Usuario limpiando espacios para la base de datos de Google
+        // Limpiamos el nombre de espacios para la base de datos de Google
         const idUsuarioLimpio = nev.replace(/[^a-zA-Z0-9íóúáééÍÓÚÁÉÚűőŐŰ]/g, '_').toLowerCase();
         
         const paqueteUsuario = {
@@ -1043,8 +1043,6 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
             tel: tel
         };
 
-        console.log("Enviando credenciales de forma encriptada a la nube...");
-
         // 🚀 VERIFICACIÓN EN LA NUBE: Revisamos de forma directa si el usuario ya existe
         fetch(`https://firebasedatabase.app{idUsuarioLimpio}.json`)
         .then(res => res.json())
@@ -1052,14 +1050,13 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
             if (snapshot !== null) {
                 alert("⚠️ Ez a felhasználónév már foglalt! Kérjük, válasszon másikat.");
             } else {
-                // 🚀 INYECCIÓN DIRECTA: Guardamos el perfil en tu servidor oficial de Firebase sin usar librerías
+                // 🚀 INYECCIÓN DIRECTA: Guardamos el perfil en tu servidor oficial de Firebase
                 fetch(`https://firebasedatabase.app{idUsuarioLimpio}.json`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(paqueteUsuario)
                 })
                 .then(() => {
-                    // Sincronizamos la memoria activa del navegador del cliente
                     localStorage.setItem('pesta_username', nev);
                     localStorage.setItem('pesta_direccion', cim);
                     localStorage.setItem('pesta_telefono', tel);
@@ -1072,23 +1069,19 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
         }).catch(err => alert("Hálózati hiba történt a regisztráció során. Próbálja újra!"));
     }
 
-    // VIGILANTE TÁCTIL AUTOMÁTICO: Amarra el clic al botón nativo de tu HTML saltando los bloqueos
     setInterval(function() {
         const btnRegHtml = document.getElementById('btnGuardarRegistro');
         if (btnRegHtml && !btnRegHtml.hasAttribute('data-cloud-ready')) {
             btnRegHtml.setAttribute('data-cloud-ready', 'true');
-            btnRegHtml.onclick = procesarRegistroCloudSatelital;
+            btnRegHtml.onclick = procesarRegistroCloudNativo;
         }
     }, 400);
 </script>
-
-
-
 <script>
     // =========================================================================
     // 🔒 SECCIÓN B: LOGIN DE VISITAS POSTERIORES (ID NATIVO: btnVerificarLogin)
     // =========================================================================
-    function procesarLoginCloudSatelital(e) {
+    function procesarLoginCloudNativo(e) {
         if(e) e.preventDefault();
 
         const nev = document.getElementById('logNev').value.trim();
@@ -1101,14 +1094,13 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
 
         const idUsuarioLimpio = nev.replace(/[^a-zA-Z0-9íóúáééÍÓÚÁÉÚűőŐŰ]/g, '_').toLowerCase();
 
-        // 🚀 CONSULTA DIRECTA: Solicitamos los datos del usuario a la API en caliente de Google
+        // 🚀 CONSULTA DIRECTA: Solicitamos los datos del usuario a tu Firebase Realtime
         fetch(`https://firebasedatabase.app{idUsuarioLimpio}.json`)
         .then(res => res.json())
         .then(cuentaCliente => {
             if (cuentaCliente !== null) {
-                // Comparamos la contraseña encriptada en tránsito de forma segura
                 if (cuentaCliente.jelszo === pass) {
-                    // Descargamos de inmediato sus datos fijos en la memoria de este dispositivo electrónico
+                    // Descargamos los datos fijos en el nuevo dispositivo electrónico
                     localStorage.setItem('pesta_username', cuentaCliente.nev);
                     localStorage.setItem('pesta_direccion', cuentaCliente.cim);
                     localStorage.setItem('pesta_telefono', cuentaCliente.tel);
@@ -1125,17 +1117,15 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
         }).catch(err => alert("Hálózati hiba a belépés során. Próbálja újra!"));
     }
 
-    // Enrutador de fuerza bruta: Salta las restricciones y abre la sección s-tienda rellenando el carro
+    // Enrutador de fuerza bruta: Abre la sección s-tienda rellenando tus datos del carro
     function desbloquearCatalogoPizzasSPA(nev, cim, tel) {
         if (typeof modoSoloVer !== "undefined") modoSoloVer = false;
         window.modoSoloVer = false;
 
-        // Inyectamos físicamente los datos descargados en los inputs de tu carro
         if(document.getElementById('inpNev')) document.getElementById('inpNev').value = nev;
         if(document.getElementById('inpCim')) document.getElementById('inpCim').value = cim;
         if(document.getElementById('inpTel')) document.getElementById('inpTel').value = tel;
 
-        // Apagamos los accesos y encendemos las pestañas de comida nativas
         document.querySelectorAll('.sc, #s-reg, #s-login, #vp').forEach(s => s.style.display = 'none');
         
         const vistaTiendaCartas = document.getElementById('s-tienda');
@@ -1143,25 +1133,23 @@ document.getElementById('lnk-m-carrito-directo').addEventListener('click', funct
             vistaTiendaCartas.style.setProperty('display', 'block', 'important');
         }
 
-        // Cerramos el indicador flotante lateral nativo
         const checkMenu = document.getElementById('menu-check-supremo');
         if (checkMenu) checkMenu.checked = false;
 
-        // Actualizamos las visuales de tu motor
         if (typeof cargarDatosEnCarrito === "function") cargarDatosEnCarrito();
         if (typeof upC === "function") upC();
     }
 
-    // VIGILANTE TÁCTIL AUTOMÁTICO: Amarra el clic al botón de login nativo de tu HTML
     setInterval(function() {
         const btnLogHtml = document.getElementById('btnVerificarLogin');
         if (btnLogHtml && !btnLogHtml.hasAttribute('data-cloud-ready')) {
             btnLogHtml.setAttribute('data-cloud-ready', 'true');
-            btnLogHtml.onclick = procesarLoginCloudSatelital;
+            btnLogHtml.onclick = procesarLoginCloudNativo;
         }
     }, 400);
 </script>
 <script src="motor.js?v=300.0"></script>
+
 </body>
 </html>
 
